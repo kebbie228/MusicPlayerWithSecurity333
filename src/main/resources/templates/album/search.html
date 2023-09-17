@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/albums/search}">
+    <label for="query">Введите поисковой запрос: </label>
+    <input type="text" id="query" name="query"/>
+    <br/>
+    <input type="submit" value="Искать!"/>
+</form>
+
+<div th:if="${albums}">
+    <div th:if="${albums.isEmpty()}">
+        <span>Книг не найдено</span>
+    </div>
+
+    <div th:each="album : ${albums}">
+        <p th:text="${album.getAlbumName() + ', ' + album.getArtist().getNickName()}">album</p>
+        <hr/>
+    </div>
+</div>
+
+
+</body>
+</html>

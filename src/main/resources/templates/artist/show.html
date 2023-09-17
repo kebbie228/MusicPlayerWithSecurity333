@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+
+<div th:each="artist:${artists}">
+   <a th:href="@{artists/{id}(id=${artist.getId()})}"
+    th:text="${artist.getNickName()}">artist</a>
+
+</div>
+ <a href="/artists/new">Create new person</a>
+
+</body>
+</html>

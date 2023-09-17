@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New person</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/songs/add}" th:object="${song}" enctype="multipart/form-data">
+
+  <p th:text="${album.albumName}">VALUE</p>
+  <p th:text="${artist.nickName}">VALUE</p>
+
+  <input type="hidden" name="albumId" th:value="${album.id}"/>
+
+  <label for="name">Enter songName:  </label>
+  <input type="text" th:field="*{songName}" id="name"/>
+  <div style="color:red" th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}">songName Error</div>
+
+  <label for="audio">Choose audio file: </label>
+  <input type="file" name="audioFile">
+  <br/>
+<!--
+ <label for="image">Choose image file: </label>
+  <input type="file" name="imageFile">
+  <br/>
+  -->
+
+
+  <br/>
+
+  <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

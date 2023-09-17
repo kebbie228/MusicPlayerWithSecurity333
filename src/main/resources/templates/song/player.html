@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="CodeHim">
+  <title>Audio Player with Playlist Example </title>
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:src="@{/css/style.css}" href="../css/style.css">
+  <!-- Demo CSS (No need to include it into your project) -->
+  <link rel="stylesheet" href="/css/demo.css">
+
+</head>
+<body>
+<main>
+  <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
+    <div class="simp-playlist">
+      <ul>
+        <th:block th:each="song : ${songs}">
+          <li>
+            <span class="simp-source" th:attr="data-src=${song.audioFilePath}">[[${song.songName}]]</span>
+            <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
+
+            <img th:src="${song.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+
+
+          </li>
+        </th:block>
+      </ul>
+    </div>
+    <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
+  </div>
+
+</main>
+
+<footer class="credit">Author: Sekedus - Distributed By: <a title="Awesome web design code & scripts" href="https://www.codehim.com?source=demo-page" target="_blank">CodeHim</a></footer>
+
+
+<script th:src="@{/js/script.js}"  href="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/albums/{id}(id=${album.getId()})}" th:object="${album}" enctype="multipart/form-data">
+    <label for="name">Enter albumName: </label>
+    <input type="text" th:field="*{albumName}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('albumName')}" th:errors="*{albumName}">albumName Error</div>
+    <br/>
+
+    <label for="person">Выберите человека</label>
+    <select th:object="${album.artist}" th:field="*{id}" id="person">
+        <option th:each="artist : ${artists}" th:value="${artist.getId()}" th:text="${artist.getNickName()}">
+        </option>
+    </select>
+    <br/>
+    <label for="image">Поменятт фото</label>
+    <input type="file" name="imageFile">
+    <br/>
+
+    <input type="submit" value="Update!"/>
+
+</form>
+</body>
+</html>

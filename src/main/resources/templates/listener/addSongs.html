@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New person</title>
+</head>
+<body>
+
+
+  <p th:text="${listener.getListenerName()}">VALUE</p>
+
+ <!-- <input type="hidden" name="albumId" th:value="${album.id}"/>-->
+
+  <tr th:each="song : ${songs}">
+    <td th:text="${song.id}">ID</td>
+    <td th:text="${song.songName}">Song Name</td>
+    <td th:text="${song.songYear}">Song Year</td>
+    <td><img th:src="${song.photoFilePath}" alt="Album Photo" width="30" height="30"></td>
+    <td>
+      <audio controls>
+        <source th:src="${song.getAudioFilePath()}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </td>
+    <td>
+      <!--      <form th:method="POST" th:action="@{/listenerSongs/addSongToListener/{id}/{id2}(id=${song.getId()},id2=${listener.getId()})}" th:object="${listenerSong}">Добавить
+ -->
+      <form th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">Добавить
+        <input type="hidden" name="songId" th:value="${song.getId() != null ? song.getId() : 0}" />
+        <input type="hidden" name="listenerId" th:value="${listener.getId()}" />
+        <input type="submit" value="Добавить песню к себе в лайки"/>
+        <br>
+      </form>
+    </td>
+  </tr>
+
+
+
+  <br/>
+
+  <input type="submit" value="Create!"/>
+
+</body>
+</html>

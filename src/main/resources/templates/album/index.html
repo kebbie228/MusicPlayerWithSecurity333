@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+<p th:text="${album.getAlbumName()}">VALUE</p>
+<p th:text="${album.getId()}">VALUE</p>
+
+<div th:each="song:${songs}">
+    <p th:text="${song.getSongName()+', '+ song.getSongYear()}">song</p>
+</div>
+
+
+<a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a>
+<br/>
+<a th:href="@{/albums/{id}/edit(id=${album.getId()})}">Edit</a>
+<form th:method="DELETE" th:action="@{/albums/{id}(id=${album.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+</body>
+
+</html>

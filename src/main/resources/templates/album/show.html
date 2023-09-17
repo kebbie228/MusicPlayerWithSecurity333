@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+
+<div th:each="album:${albums}">
+   <a th:href="@{albums/{id}(id=${album.getId()})}"
+    th:text="${album.getAlbumName()}">album</a>
+    <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+</div>
+ <a href="/albums/new">Create new person</a>
+
+</body>
+</html>
