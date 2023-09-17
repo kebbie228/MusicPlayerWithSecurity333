@@ -23,8 +23,8 @@ INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_f
 
 
 
-INSERT INTO listener(listener_name) VALUES('Listener1');
-INSERT INTO listener(listener_name) VALUES('Listener2');
+INSERT INTO listener(listener_name,role) VALUES('Listener1','ROLE_USER');
+INSERT INTO listener(listener_name) VALUES('Listener2','ROLE_ADMIN');
 INSERT INTO listener_song(listener_id,song_id) VALUES(1,1);
 INSERT INTO listener_song(listener_id,song_id) VALUES(1,3);
 INSERT INTO listener_song(listener_id,song_id) VALUES(1,6);

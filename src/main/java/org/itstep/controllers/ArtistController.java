@@ -1,7 +1,7 @@
-package org.itstep.Controller;
+package org.itstep.controllers;
 
-import org.itstep.Service.ArtistService;
 import org.itstep.model.Artist;
+import org.itstep.services.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,9 +1,10 @@
-package org.itstep.Service;
+package org.itstep.services;
 
-import org.itstep.Repository.ListenerSongRepository;
+
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
 import org.itstep.model.Song;
+import org.itstep.repositories.ListenerSongRepository;
 import org.springframework.stereotype.Service;
 
 @Service

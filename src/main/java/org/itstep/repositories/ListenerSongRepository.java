@@ -1,4 +1,4 @@
-package org.itstep.Repository;
+package org.itstep.repositories;
 
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ListenerSongRepository extends JpaRepository<ListenerSong,Integer> {
     ListenerSong findByListenerAndSong(Listener listener, Song song);
+
 }

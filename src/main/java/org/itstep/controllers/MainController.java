@@ -1,13 +1,13 @@
-package org.itstep.Controller;
+package org.itstep.controllers;
 
-import org.itstep.Service.AlbumService;
-import org.itstep.Service.ArtistService;
-import org.itstep.Service.SongService;
+
+import org.itstep.services.AlbumService;
+import org.itstep.services.ArtistService;
+import org.itstep.services.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller

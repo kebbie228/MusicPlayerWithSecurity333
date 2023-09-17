@@ -1,17 +1,11 @@
-package org.itstep.Controller;
+package org.itstep.controllers;
 
-import org.itstep.Service.ListenerService;
-import org.itstep.Service.ListenerSongService;
-import org.itstep.Service.SongService;
-import org.itstep.model.Artist;
+
 import org.itstep.model.ListenerSong;
-import org.itstep.model.Song;
+import org.itstep.services.ListenerService;
+import org.itstep.services.ListenerSongService;
+import org.itstep.services.SongService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-
 import org.springframework.web.bind.annotation.*;
 
 @Controller

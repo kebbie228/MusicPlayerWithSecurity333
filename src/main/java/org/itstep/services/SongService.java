@@ -1,10 +1,10 @@
-package org.itstep.Service;
+package org.itstep.services;
 
-import org.itstep.Repository.SongRepository;
+
 import org.itstep.model.Album;
-import org.itstep.model.Artist;
 import org.itstep.model.Listener;
 import org.itstep.model.Song;
+import org.itstep.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

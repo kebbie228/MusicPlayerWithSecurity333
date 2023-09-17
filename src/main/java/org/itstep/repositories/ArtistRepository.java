@@ -1,8 +1,7 @@
-package org.itstep.Repository;
+package org.itstep.repositories;
 
 import org.itstep.model.Album;
 import org.itstep.model.Artist;
-import org.itstep.model.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

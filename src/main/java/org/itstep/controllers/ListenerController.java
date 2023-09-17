@@ -1,10 +1,10 @@
-package org.itstep.Controller;
+package org.itstep.controllers;
 
-import org.itstep.Service.ListenerService;
-import org.itstep.Service.SongService;
+
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
-import org.itstep.model.Song;
+import org.itstep.services.ListenerService;
+import org.itstep.services.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -1,7 +1,6 @@
 package org.itstep.util;
 
 import org.itstep.model.Listener;
-import org.itstep.model.Person;
 import org.itstep.services.ListenerDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +30,12 @@ public class ListenerValidator implements Validator {
 
         try {
 
-            listenerDetailsService.loadListenerByListenerName(listener.getListenerName());
+            listenerDetailsService.loadUserByUsername(listener.getListenerName());
+
         } catch (UsernameNotFoundException ignored) {
             return; // все ок, пользователь не найден
         }
 
-        errors.rejectValue("username", "", "Человек с таким именем пользователя уже существует");
+        errors.rejectValue("listenerName", "", "Человек с таким именем пользователя уже существует");
     }
 }

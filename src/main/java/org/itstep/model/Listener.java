@@ -2,6 +2,7 @@ package org.itstep.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -13,11 +14,16 @@ public class Listener {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-    @Column(name = "listener_name")
+    @Column(name = "username")
     @NotEmpty(message = "Song name should not be empty")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
         private String listenerName;
 
+    @Column(name = "role")
+    @NotNull
+    private String role;
+    @Column(name = "password")
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -25,6 +31,7 @@ public class Listener {
             joinColumns = @JoinColumn(name="listener_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
+
     private List<Song> songs;
 
 
@@ -36,6 +43,21 @@ public class Listener {
         this.listenerName = listenerName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     public int getId() {
         return id;
     }

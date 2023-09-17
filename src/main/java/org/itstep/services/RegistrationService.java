@@ -1,7 +1,8 @@
 package org.itstep.services;
 
-import org.itstep.model.Person;
-import org.itstep.repositories.PeopleRepository;
+import org.itstep.model.Listener;
+import org.itstep.repositories.ListenerRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,18 +11,18 @@ import javax.transaction.Transactional;
 
 @Service
 public class RegistrationService {
-    private final PeopleRepository peopleRepository;
+    private final ListenerRepository listenerRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder) {
-        this.peopleRepository = peopleRepository;
+    public RegistrationService(ListenerRepository listenerRepository, PasswordEncoder passwordEncoder) {
+        this.listenerRepository = listenerRepository;
         this.passwordEncoder = passwordEncoder;
     }
     @Transactional
-     public void register(Person person) {
-      person.setPassword(passwordEncoder.encode(person.getPassword()));
-      person.setRole("ROLE_USER");
-       peopleRepository.save(person);
+     public void register(Listener listener) {
+        listener.setPassword(passwordEncoder.encode(listener.getPassword()));
+        listener.setRole("ROLE_USER");
+        listenerRepository.save(listener);
      }
 }

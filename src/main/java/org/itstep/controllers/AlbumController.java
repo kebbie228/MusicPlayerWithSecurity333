@@ -1,11 +1,11 @@
-package org.itstep.Controller;
+package org.itstep.controllers;
 
-import org.itstep.Service.AlbumService;
-import org.itstep.Service.ArtistService;
-import org.itstep.Service.SongService;
+
 import org.itstep.model.Album;
-import org.itstep.model.Artist;
 import org.itstep.model.Song;
+import org.itstep.services.AlbumService;
+import org.itstep.services.ArtistService;
+import org.itstep.services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/albums")
