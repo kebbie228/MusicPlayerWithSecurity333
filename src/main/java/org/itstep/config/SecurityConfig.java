@@ -1,13 +1,9 @@
 package org.itstep.config;
 
-import org.itstep.security.ListenerSecurity;
 import org.itstep.services.ListenerDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.expression.DenyAllPermissionEvaluator;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,7 +27,6 @@ http.authorizeRequests()
          .antMatchers("/auth/login","/auth/registration","/error").permitAll()
           //не пускаем на другие страницы
     // когда роли добавляешь то убрать эту строку  .anyRequest().authenticated() на
-        .antMatchers("/listener/{id}").access("isAuthenticated() and @listenerSecurity.checkUserId(authentication, #id)") // Проверка идентификатора пользователя
         .anyRequest().hasAnyRole("USER","ADMIN")
         .and()
         .formLogin().loginPage("/auth/login")
@@ -54,13 +49,5 @@ http.authorizeRequests()
     public PasswordEncoder getPasswordEncoder(){
     return new BCryptPasswordEncoder();
     }
-    @Autowired
-    private ListenerSecurity listenerSecurity;
 
-    @Bean
-    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
-        DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
-        handler.setPermissionEvaluator(new DenyAllPermissionEvaluator());
-        return handler;
-    }
 }
