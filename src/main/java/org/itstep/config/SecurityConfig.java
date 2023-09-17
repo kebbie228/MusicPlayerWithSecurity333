@@ -31,7 +31,7 @@ http.authorizeRequests()
          .antMatchers("/auth/login","/auth/registration","/error").permitAll()
           //не пускаем на другие страницы
     // когда роли добавляешь то убрать эту строку  .anyRequest().authenticated() на
-     //   .antMatchers("/listener/{id}").access("isAuthenticated() and @listenerSecurity.checkUserId(authentication, #id)") // Проверка идентификатора пользователя
+        .antMatchers("/listener/{id}").access("isAuthenticated() and @listenerSecurity.checkUserId(authentication, #id)") // Проверка идентификатора пользователя
         .anyRequest().hasAnyRole("USER","ADMIN")
         .and()
         .formLogin().loginPage("/auth/login")
@@ -54,13 +54,13 @@ http.authorizeRequests()
     public PasswordEncoder getPasswordEncoder(){
     return new BCryptPasswordEncoder();
     }
-//    @Autowired
-//    private ListenerSecurity listenerSecurity;
-//
-//    @Bean
-//    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
-//        DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
-//        handler.setPermissionEvaluator(new DenyAllPermissionEvaluator());
-//        return handler;
-//    }
+    @Autowired
+    private ListenerSecurity listenerSecurity;
+
+    @Bean
+    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
+        handler.setPermissionEvaluator(new DenyAllPermissionEvaluator());
+        return handler;
+    }
 }
