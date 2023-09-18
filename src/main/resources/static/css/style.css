@@ -67,3 +67,21 @@ a,a:hover,a:visited{color:#ddd;text-decoration:none;}
 }imp .simp-album .simp-cover img{max-width:80px;width:100%;margin:0;padding:0;display:block;}
 #simp .simp-album .simp-title{font-size:120%;font-weight:bold;}
 #simp .simp-album .simp-artist{font-size:90%;color:#6c7883;}
+.input-button {
+    background-color: #4CAF50; /* Цвет фона */
+    color: white; /* Цвет текста */
+    border: none; /* Убрать границу */
+    padding: 10px 20px; /* Отступы вокруг текста */
+    text-align: center; /* Выравнивание текста по центру */
+    text-decoration: none; /* Убрать подчеркивание ссылки */
+    display: inline-block;
+    font-size: 16px; /* Размер шрифта */
+    margin: 4px 2px; /* Внешний отступ сверху и снизу */
+    cursor: pointer; /* Показать курсор при наведении */
+    border-radius: 4px; /* Закруглить углы */
+}
+
+/* Стили для кнопки при наведении */
+.input-button:hover {
+    background-color: #45a049; /* Цвет фона при наведении */
+}

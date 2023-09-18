@@ -4,10 +4,14 @@ package org.itstep.controllers;
 import org.itstep.model.Album;
 import org.itstep.model.ListenerSong;
 import org.itstep.model.Song;
+import org.itstep.security.ListenerDetails;
 import org.itstep.services.AlbumService;
 import org.itstep.services.ArtistService;
+import org.itstep.services.ListenerSongService;
 import org.itstep.services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/albums")
@@ -24,11 +31,13 @@ public class AlbumController {
 
     private  final AlbumService albumService;
     private final ArtistService artistService;
+    private  final ListenerSongService listenerSongService;
 private final SongService songService;
     @Autowired
-    public AlbumController(AlbumService albumService, ArtistService artistService, SongService songService) {
+    public AlbumController(AlbumService albumService, ArtistService artistService, ListenerSongService listenerSongService, SongService songService) {
         this.albumService = albumService;
         this.artistService = artistService;
+        this.listenerSongService = listenerSongService;
         this.songService = songService;
     }
 
@@ -41,7 +50,23 @@ private final SongService songService;
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong){
         model.addAttribute("album",albumService.findById(id));
+        List<Song> songs = songService.findByAlbum(albumService.findById(id));
         model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        int listenerId = listenerDetails.getListener().getId(); // Получаем идентификатор слушателя
+
+        // Создаем Map для хранения информации о каждой песне (songId -> songAdded)
+        Map<Integer, Boolean> songAddedMap = new HashMap<>();
+
+        for (Song song : songs) {
+            int songId = song.getId();
+            boolean songAdded = listenerSongService.hasSong(listenerId, songId);
+            songAddedMap.put(songId, songAdded);
+        }
+
+        model.addAttribute("songAddedMap", songAddedMap); // Передаем информацию в модель
 
         return "album/index";
     }

@@ -21,20 +21,16 @@ INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_f
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Yeah Right',2019,3,5,'Joji_-_Yeah_Right_(musmore.com).mp3','photo/joji1.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Run',2020,3,6,'Joji_-_Run_(musmore.com).mp3','photo/joji-run.jpg');
 
+--insert into listener (username, password, role)values ('Listener1','Listener1','ROLE_ADMIN');
+-- insert into listener (username, password, role) values ('Listener2','Listener2','ROLE_USER');
+-- INSERT INTO listener_song(listener_id,song_id) VALUES(1,1);
+-- INSERT INTO listener_song(listener_id,song_id) VALUES(1,3);
+-- INSERT INTO listener_song(listener_id,song_id) VALUES(1,6);
+-- INSERT INTO listener_song(listener_id,song_id) VALUES(1,5);
 
 
-insert into listener (username, password, role)
-values ('Listener1','Listener1','ROLE_ADMIN');
-insert into listener (username, password, role)
-values ('Listener2','Listener2','ROLE_USER');
-INSERT INTO listener_song(listener_id,song_id) VALUES(1,1);
-INSERT INTO listener_song(listener_id,song_id) VALUES(1,3);
-INSERT INTO listener_song(listener_id,song_id) VALUES(1,6);
-INSERT INTO listener_song(listener_id,song_id) VALUES(1,5);
-
-
-INSERT INTO listener_song(listener_id,song_id) VALUES(2,1);
-INSERT INTO listener_song(listener_id,song_id) VALUES(2,3);
+--INSERT INTO listener_song(listener_id,song_id) VALUES(2,1);
+--INSERT INTO listener_song(listener_id,song_id) VALUES(2,3);
 
 
 

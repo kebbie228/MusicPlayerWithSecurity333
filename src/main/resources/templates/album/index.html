@@ -18,17 +18,23 @@
             <ul>
                 <th:block th:each="song : ${songs}">
                     <li style="display: flex; align-items: center;">
-                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
+                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
                         <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
                         <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
-                       <form th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
-                            <input type="hidden" name="songId" th:value="${song.getId() != null ? song.getId() : 0}" />
-                           <input type="hidden" name="albumId" th:value="${album.getId()}" />
-                       <!--     <input type="hidden" name="listenerId" th:value="${listener.getId()}" />-->
-                            <input type="submit" value="Добавить песню к себе в лайки"/>
-                        </form>
-                    </li>
 
+                        <!-- Проверяем, добавлена ли песня к слушателю, и отображаем соответствующую кнопку -->
+                        <th:block th:if="${songAddedMap[song.getId()]}">
+                            <button style="margin-left: auto; margin-right: 10px;" class="btn btn-success" disabled>Добавлена</button>
+                        </th:block>
+
+                        <th:block th:unless="${songAddedMap[song.getId()]}">
+                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
+                                <input type="hidden" name="songId" th:value="${song.getId()}" />
+                                <input type="hidden" name="albumId" th:value="${album.getId()}" />
+                                <input type="submit" value="Добавить песню" class="btn btn-success" />
+                            </form>
+                        </th:block>
+                    </li>
                 </th:block>
             </ul>
         </div>
@@ -37,7 +43,7 @@
 
 </main>
 
-<a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a>
+<!-- <a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a> -->
 <br/>
 <script th:src="@{/js/script.js}"  src="../js/script.js"></script>
 

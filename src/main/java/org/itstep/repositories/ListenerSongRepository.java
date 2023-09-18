@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface ListenerSongRepository extends JpaRepository<ListenerSong,Integer> {
     ListenerSong findByListenerAndSong(Listener listener, Song song);
 
+   boolean existsByListenerIdAndSongId(int listenerId, int songId);
 }

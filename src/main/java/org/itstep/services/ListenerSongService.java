@@ -25,4 +25,8 @@ public class ListenerSongService {
         listenerSongRepository.save(listenerSong);
     }
 
+    public boolean hasSong(int listenerId, int songId) {
+        return listenerSongRepository.existsByListenerIdAndSongId(listenerId, songId);
+    }
+
 }
