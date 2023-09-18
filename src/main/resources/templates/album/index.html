@@ -18,8 +18,8 @@
             <ul>
                 <th:block th:each="song : ${songs}">
                     <li style="display: flex; align-items: center;">
-                        <img th:src="${song.getPhotoFilePath()}" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
-                        <span class="simp-source" th:attr="data-src=${song.audioFilePath}">[[${song.songName}]]</span>
+                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
+                        <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
                         <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
                        <form th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
                             <input type="hidden" name="songId" th:value="${song.getId() != null ? song.getId() : 0}" />
@@ -37,7 +37,8 @@
 
 </main>
 
-
+<a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a>
+<br/>
 <script th:src="@{/js/script.js}"  src="../js/script.js"></script>
 
 

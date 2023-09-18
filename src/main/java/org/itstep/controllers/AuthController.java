@@ -42,7 +42,7 @@ public String performRegistration(
             @ModelAttribute("listener") @Valid Listener listener,BindingResult bindingResult
     ){
         listenerValidator.validate(listener,bindingResult);
-  if(bindingResult.hasErrors()) return "/auth/registration";
+ // if(bindingResult.hasErrors()) return "/auth/registration";
     registrationService.register(listener);
       return "redirect:/auth/login";
     }
