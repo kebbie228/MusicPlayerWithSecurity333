@@ -68,26 +68,8 @@ private final SongService songService;
         albumService.save(album);
         return "redirect:/albums";
     }
-    @GetMapping("/new/playlist")
-    public String newPlayList(@ModelAttribute("album") Album album,Model model){
-        model.addAttribute("artists",artistService.findAll());
-        return "album/newPlaylist";
-    }
 
-    @PostMapping("/playlist")
-    public String createPlayList(@ModelAttribute("album") Album album,
-                         BindingResult bindingResult,
-                         @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        if (!imageFile.isEmpty()) {
-            File dir = null; //Файловая система
-            //dir = new File("src/main/resources/static/album_photo");
-            dir = new File("target/classes/static/photo");
-            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
-            album.setPhotoFilePath("/photo/"+imageFile.getOriginalFilename());
-        }
-        albumService.save(album);
-        return "redirect:/albums";
-    }
+
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("album", albumService.findById(id));
@@ -126,7 +108,7 @@ private final SongService songService;
     ) {
        // model.addAttribute("song", new Song());
         model.addAttribute("album", albumService.findById(id));
-    //    model.addAttribute("artist",artistService.findByAlbums(albumService.findById(id)));
+        model.addAttribute("artist",artistService.findByAlbums(albumService.findById(id)));
         return "album/addSong";
     }
 

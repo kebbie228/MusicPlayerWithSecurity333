@@ -29,9 +29,8 @@ public class HelloController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
         model.addAttribute("listener",listenerDetails.getListener());
-       // List<Album> albums = albumService.findAll();
-        //  albumService.findByAlbumNameContainingIgnoreCase("rock");
-          //  model.addAttribute("albums",albumService.findAll());
+
+        model.addAttribute("albumsRock", albumService.findByAlbumNameContainingIgnoreCase("rock"));
 
         return "hello";
     }

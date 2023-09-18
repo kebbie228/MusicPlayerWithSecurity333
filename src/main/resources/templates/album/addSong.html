@@ -9,7 +9,7 @@
 <form th:method="POST" th:action="@{/songs/add}" th:object="${song}" enctype="multipart/form-data">
 
   <p th:text="${album.albumName}">VALUE</p>
- <!-- <p th:text="${artist.nickName}">VALUE</p> -->
+ <p th:text="${artist.nickName}">VALUE</p>
 
   <input type="hidden" name="albumId" th:value="${album.id}"/>
 

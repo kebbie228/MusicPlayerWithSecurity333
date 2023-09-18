@@ -8,6 +8,12 @@
 <body>
 <h1 align="right"> <a th:href="@{/listeners/{id}(id=${listener.getId()})}">go to your profile</a></h1>
 
+<div th:each="album:${albumsRock}">
+    <a th:href="@{albums/{id}(id=${album.getId()})}"
+       th:text="${album.getAlbumName()}">album</a>
+    <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+</div>
+
 <form th:action="@{/logout}" method="POST">
     <input type="submit" value="Logout" />
 </form>
