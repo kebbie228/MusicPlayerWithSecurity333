@@ -2,9 +2,12 @@ package org.itstep.controllers;
 
 
 import org.itstep.model.ListenerSong;
+import org.itstep.security.ListenerDetails;
 import org.itstep.services.ListenerService;
 import org.itstep.services.ListenerSongService;
 import org.itstep.services.SongService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,15 +39,18 @@ public class ListenerSongController {
     //    @PostMapping("/addSongToListener/{id}/{id2}")
     @PostMapping("/addSongToListener")
     public String addSongToListener(//@PathVariable("id") int id, @PathVariable("id2") int id2,
-                                   @ModelAttribute("listenerSong") ListenerSong listenerSong,
-                                    @RequestParam("songId") int songId,
-                                    @RequestParam("listenerId") int listenerId
+                                     @ModelAttribute("listenerSong") ListenerSong listenerSong,
+                                    @RequestParam("songId") int songId
+                                    , @RequestParam("albumId") int albumId
                   ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+         //  model.addAttribute("listener",listenerDetails.getListener());
 
         listenerSong.setSong(songService.findById(songId));
-        listenerSong.setListener(listenerService.findById(listenerId));
+        listenerSong.setListener(listenerDetails.getListener());
         listenerSongService.save(listenerSong);
-        String redirectUrl = "redirect:/listeners/" + listenerId;
+        String redirectUrl = "redirect:/albums/" + albumId;
         return redirectUrl;
     }
 

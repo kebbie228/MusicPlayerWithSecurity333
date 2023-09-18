@@ -2,6 +2,7 @@ package org.itstep.controllers;
 
 
 import org.itstep.model.Album;
+import org.itstep.model.ListenerSong;
 import org.itstep.model.Song;
 import org.itstep.services.AlbumService;
 import org.itstep.services.ArtistService;
@@ -38,7 +39,7 @@ private final SongService songService;
     }
 
     @GetMapping("/{id}")
-    public String index(@PathVariable("id") int id, Model model){
+    public String index(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong){
         model.addAttribute("album",albumService.findById(id));
         model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
 
