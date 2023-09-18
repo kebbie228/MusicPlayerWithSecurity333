@@ -6,7 +6,8 @@
     <title>Hello</title>
 </head>
 <body>
-Hello world!
+<h1 align="right"> <a th:href="@{/listeners/{id}(id=${listener.getId()})}">go to your profile</a></h1>
+
 <form th:action="@{/logout}" method="POST">
     <input type="submit" value="Logout" />
 </form>

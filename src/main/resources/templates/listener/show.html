@@ -9,6 +9,7 @@
 <body>
 
 <div th:each="listener:${listeners}">
+    <a th:href="@{/listeners/{id}(id=${listener.getId()})}">Show listener</a>
    <a th:href="@{listeners/{id}(id=${listener.getId()})}"
     th:text="${listener.getListenerName()}">artist</a>
 </div>

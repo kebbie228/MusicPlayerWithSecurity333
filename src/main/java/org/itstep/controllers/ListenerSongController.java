@@ -27,7 +27,9 @@ public class ListenerSongController {
         songService.findById(id);
         listenerService.findById(id2);
         listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById(id2)));
-        return "redirect:/listeners";
+
+        String redirectUrl = "redirect:/listeners/" + id2+"/songs";
+        return redirectUrl;
     }
 
 //add song to listener
@@ -42,8 +44,11 @@ public class ListenerSongController {
         listenerSong.setSong(songService.findById(songId));
         listenerSong.setListener(listenerService.findById(listenerId));
         listenerSongService.save(listenerSong);
-        return "redirect:/listeners";
+        String redirectUrl = "redirect:/listeners/" + listenerId;
+        return redirectUrl;
     }
+
+
 
 
 }

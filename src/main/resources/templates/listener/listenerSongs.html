@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="CodeHim">
+  <title>Audio Player with Playlist Example </title>
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css">
+
+</head>
+<body>
+<main>
+  <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
+    <div class="simp-playlist">
+      <ul>
+        <th:block th:each="song : ${songs}">
+          <li style="display: flex; align-items: center;">
+            <img th:src="${song.getPhotoFilePath()}" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
+            <span class="simp-source" th:attr="data-src=${song.audioFilePath}">[[${song.songName}]]</span>
+            <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
+            <form style="margin-left: auto; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}(id=${song.getId()},id2=${listener.getId()})}">
+              <input type="submit" value="Удалить"/>
+            </form>
+          </li>
+
+        </th:block>
+      </ul>
+    </div>
+    <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
+  </div>
+
+</main>
+
+
+<script th:src="@{/js/script.js}"  src="../js/script.js"></script>
+</body>
+</html>

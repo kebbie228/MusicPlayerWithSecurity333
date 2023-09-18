@@ -21,7 +21,7 @@ private final ListenerDetailsService listenerDetailsService;
 
 @Override
     protected void configure(HttpSecurity http) throws Exception{
-http.authorizeRequests()
+    http.authorizeRequests()
         //пускаем только на 2 страницы всех пользователей
          .antMatchers("/admin").hasRole("ADMIN")
          .antMatchers("/auth/login","/auth/registration","/error").permitAll()

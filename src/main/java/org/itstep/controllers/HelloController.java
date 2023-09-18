@@ -1,11 +1,16 @@
 package org.itstep.controllers;
 
+import org.itstep.model.Album;
 import org.itstep.security.ListenerDetails;
 
+import org.itstep.services.AlbumService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 
 /**
@@ -13,8 +18,21 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class HelloController {
+    private  final AlbumService albumService;
+
+    public HelloController(AlbumService albumService) {
+        this.albumService = albumService;
+    }
+
     @GetMapping("/hello")
-    public String sayHello() {
+    public String sayHello(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
+       // List<Album> albums = albumService.findAll();
+        //  albumService.findByAlbumNameContainingIgnoreCase("rock");
+          //  model.addAttribute("albums",albumService.findAll());
+
         return "hello";
     }
 

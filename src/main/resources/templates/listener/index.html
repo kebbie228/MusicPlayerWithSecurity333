@@ -6,7 +6,10 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="${listener.getListenerName()}">VALUE</p>
+<h1 align="left"><a  href="/hello">Главное меню</a> </h1>
+<div><a th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">go to your likedSongs</a></div>
+
+<!--<p th:text="${listener.getListenerName()}">VALUE</p>
 <p th:text="${listener.getId()}">VALUE</p>
 <a th:href="@{/listeners/{id}/edit(id=${listener.getId()})}">Edit</a>
 
@@ -33,8 +36,10 @@
 <form th:method="DELETE" th:action="@{/listeners/{id}(id=${listener.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
-
-
 <a th:href="@{/listeners/{id}/addSongs(id=${listener.getId()})}">Добавить песни слушателю</a>
+-->
+
+
+
 </body>
 </html>

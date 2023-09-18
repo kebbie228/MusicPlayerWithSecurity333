@@ -3,8 +3,12 @@ package org.itstep.controllers;
 
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
+import org.itstep.security.ListenerDetails;
+import org.itstep.services.ListenerDetailsService;
 import org.itstep.services.ListenerService;
 import org.itstep.services.SongService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/listeners")
 
 public class ListenerController {
+
     private final ListenerService listenerService;
     private final SongService songService;
 
@@ -35,8 +40,17 @@ public class ListenerController {
     public String index(@PathVariable("id") int id, Model model){
         model.addAttribute("listener",listenerService.findById(id));
       //dangerous
-        model.addAttribute("songs",songService.findByListeners(listenerService.findById(id)));
+    //    model.addAttribute("songs",songService.findByListeners(listenerService.findById(id)));
         return "listener/index";
+    }
+
+
+    @GetMapping("/{id}/songs")
+    public String listenerSong(@PathVariable("id") int id, Model model){
+        model.addAttribute("listener",listenerService.findById(id));
+        //dangerous
+          model.addAttribute("songs",songService.findByListeners(listenerService.findById(id)));
+        return "listener/listenerSongs";
     }
 
 

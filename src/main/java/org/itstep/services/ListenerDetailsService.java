@@ -37,4 +37,5 @@ public class ListenerDetailsService implements UserDetailsService {
       if (listener.isEmpty()) throw new UsernameNotFoundException("listener not found!");
         return new ListenerDetails(listener.get());
     }
+
 }

@@ -46,5 +46,6 @@ public String performRegistration(
     registrationService.register(listener);
       return "redirect:/auth/login";
     }
+
 }
 
