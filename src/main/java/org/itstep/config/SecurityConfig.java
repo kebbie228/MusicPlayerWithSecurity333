@@ -25,7 +25,7 @@ private final ListenerDetailsService listenerDetailsService;
         //пускаем только на 2 страницы всех пользователей
          .antMatchers("/admin").hasRole("ADMIN")
          .antMatchers("/auth/login","/auth/registration","/error").permitAll()
-          //не пускаем на другие страницы
+            //не пускаем на другие страницы
     // когда роли добавляешь то убрать эту строку  .anyRequest().authenticated() на
         .anyRequest().hasAnyRole("USER","ADMIN")
         .and()

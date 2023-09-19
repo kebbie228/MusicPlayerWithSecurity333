@@ -34,7 +34,7 @@ public class MainController {
         model.addAttribute("albums", albumService.findByAlbumNameContainingIgnoreCase(firstLetters));
         model.addAttribute("artists", artistService.findByNickNameContainingIgnoreCase(firstLetters));
         model.addAttribute("songs", songService.findBySongNameContainingIgnoreCase(firstLetters));
-        return "main/search";
+        return "search";
     }
     @GetMapping("/search2")
     public String searchPage2() {

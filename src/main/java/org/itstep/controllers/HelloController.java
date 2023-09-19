@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,8 +30,12 @@ public class HelloController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
         model.addAttribute("listener",listenerDetails.getListener());
+//List<Album> albums= new ArrayList<>();
 
         model.addAttribute("albumsRock", albumService.findByAlbumNameContainingIgnoreCase("rock"));
+        model.addAttribute("albumsHip", albumService.findByAlbumNameContainingIgnoreCase("hip"));
+        model.addAttribute("albumsMetal", albumService.findByAlbumNameContainingIgnoreCase("metal"));
+        model.addAttribute("albumsRap", albumService.findByAlbumNameContainingIgnoreCase("rap"));
 
         return "hello";
     }

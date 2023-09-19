@@ -4,8 +4,31 @@
 <head>
     <meta charset="UTF-8" >
     <title>Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="photo/spoti.png" alt="Spoti Logo" width="35" height="35">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
+            </li>
+        </ul>
+    </div>
+    <div class="ml-auto">
+        <a class="nav-link" href="#" th:href="@{/listeners/{id}(id=${listener.getId()})}">Your Profile</a>
+    </div>
+</nav>
+
+
+
 <h1 align="left"><a  href="/hello">Главное меню</a> </h1>
 <div><a th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">go to your likedSongs</a></div>
 
@@ -40,6 +63,8 @@
 -->
 
 
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,22 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
+    <!-- Подключаем стили Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1 align="right"> <a th:href="@{/listeners/{id}(id=${listener.getId()})}">go to your profile</a></h1>
+<!-- Навигационное меню Bootstrap -->
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/photo/spoti.png" alt="Spoti Logo" width="35" height="35">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+        </ul>
+    </div>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Your Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
+                <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+                <a class="dropdown-item" th:href="@{/listeners/{id}/artists(id=${listener.getId()})}">Liked Artists</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<div class="container mt-5">
+    <h2>Top Playlists</h2>
+    <div th:each="album:${albumsRock}">
+        <a th:href="@{albums/{id}(id=${album.getId()})}"
+           th:text="${album.getAlbumName()}">album</a>
+        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    </div>
 
-<div th:each="album:${albumsRock}">
-    <a th:href="@{albums/{id}(id=${album.getId()})}"
-       th:text="${album.getAlbumName()}">album</a>
-    <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    <div th:each="album:${albumsRap}">
+        <a th:href="@{albums/{id}(id=${album.getId()})}"
+           th:text="${album.getAlbumName()}">album</a>
+        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    </div>
+    <div th:each="album:${albumsHip}">
+        <a th:href="@{albums/{id}(id=${album.getId()})}"
+           th:text="${album.getAlbumName()}">album</a>
+        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    </div>
+    <div th:each="album:${albumsMetal}">
+        <a th:href="@{albums/{id}(id=${album.getId()})}"
+           th:text="${album.getAlbumName()}">album</a>
+        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    </div>
 </div>
 
-<form th:action="@{/logout}" method="POST">
-    <input type="submit" value="Logout" />
-</form>
-
+<!-- Подключаем скрипты Bootstrap (необходимы для работы некоторых компонентов) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
