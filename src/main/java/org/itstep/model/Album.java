@@ -28,6 +28,10 @@ public class Album {
     @JoinColumn(name = "artist_id", referencedColumnName = "artist_id")
     private Artist artist;
 
+
+    @ManyToMany(mappedBy = "albums",cascade = CascadeType.ALL)
+    private List<Listener> listeners;
+
     public String getPhotoFilePath() {
         return photoFilePath;
     }

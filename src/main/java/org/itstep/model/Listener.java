@@ -34,6 +34,13 @@ public class Listener {
 
     private List<Song> songs;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="listener_album",
+            joinColumns = @JoinColumn(name="listener_id"),
+            inverseJoinColumns = @JoinColumn(name = "album_id")
+    )
+    private List<Album> albums;
 
     public Listener() {
     }

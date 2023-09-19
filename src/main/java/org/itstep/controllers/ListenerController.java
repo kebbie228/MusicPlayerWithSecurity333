@@ -3,12 +3,9 @@ package org.itstep.controllers;
 
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
-import org.itstep.security.ListenerDetails;
-import org.itstep.services.ListenerDetailsService;
+import org.itstep.services.AlbumService;
 import org.itstep.services.ListenerService;
 import org.itstep.services.SongService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +20,12 @@ public class ListenerController {
 
     private final ListenerService listenerService;
     private final SongService songService;
+    private final AlbumService albumService;
 
-    public ListenerController(ListenerService listenerService, SongService songService) {
+    public ListenerController(ListenerService listenerService, SongService songService, AlbumService albumService) {
         this.listenerService = listenerService;
         this.songService = songService;
+        this.albumService = albumService;
     }
 
     @GetMapping()
@@ -51,6 +50,14 @@ public class ListenerController {
         //dangerous
           model.addAttribute("songs",songService.findByListeners(listenerService.findById(id)));
         return "listener/listenerSongs";
+    }
+
+    @GetMapping("/{id}/albums")
+    public String listenerAlbum(@PathVariable("id") int id, Model model){
+        model.addAttribute("listener",listenerService.findById(id));
+        //dangerous
+        model.addAttribute("albums",albumService.findByListeners(listenerService.findById(id)));
+        return "listener/listenerAlbums";
     }
 
 

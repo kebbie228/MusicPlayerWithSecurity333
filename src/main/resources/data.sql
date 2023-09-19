@@ -27,7 +27,7 @@ INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_f
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Yeah Right',2019,3,5,'Joji_-_Yeah_Right_(musmore.com).mp3','photo/joji1.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Run',2020,3,6,'Joji_-_Run_(musmore.com).mp3','photo/joji-run.jpg');
 
-INSERT INTO album(album_name,photo_file_path) VALUES('Rock','photo/rock.png');
+INSERT INTO album(album_name,photo_file_path) VALUES('Rock','photo/rock.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Stairway to Heaven',2021,4,7,'Stairway to Heaven, Led Zeppelin.mp3','photo/Stairway to Heaven, Led Zeppelin.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('The Show Must Go On',1983,1,7,'Queen - The Show Must Go On.mp3','photo/Queen-TheShowMustGoOn.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Hotel California',2019,5,7,'The Eagles - Hotel California.mp3','photo/Hotel California, The Eagles.jpg');
