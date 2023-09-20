@@ -37,15 +37,30 @@ public class ListenerSongController {
 
 //add song to listener
     //    @PostMapping("/addSongToListener/{id}/{id2}")
-    @PostMapping("/addSongToListener")
-    public String addSongToListener(//@PathVariable("id") int id, @PathVariable("id2") int id2,
+    @PostMapping("/addSongToListener2")
+    public String addSongToListener2(//@PathVariable("id") int id, @PathVariable("id2") int id2,
                                      @ModelAttribute("listenerSong") ListenerSong listenerSong,
                                     @RequestParam("songId") int songId
-                                    , @RequestParam("albumId") int albumId
                   ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
          //  model.addAttribute("listener",listenerDetails.getListener());
+
+        listenerSong.setSong(songService.findById(songId));
+        listenerSong.setListener(listenerDetails.getListener());
+        listenerSongService.save(listenerSong);
+        String redirectUrl = "redirect:/songs/" + songId;
+        return redirectUrl;
+    }
+    @PostMapping("/addSongToListener")
+    public String addSongToListener(//@PathVariable("id") int id, @PathVariable("id2") int id2,
+                                    @ModelAttribute("listenerSong") ListenerSong listenerSong,
+                                    @RequestParam("songId") int songId
+            , @RequestParam("albumId") int albumId
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        //  model.addAttribute("listener",listenerDetails.getListener());
 
         listenerSong.setSong(songService.findById(songId));
         listenerSong.setListener(listenerDetails.getListener());

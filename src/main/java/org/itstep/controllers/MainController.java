@@ -1,14 +1,22 @@
 package org.itstep.controllers;
 
 
+import org.itstep.model.Album;
+import org.itstep.security.ListenerDetails;
 import org.itstep.services.AlbumService;
 import org.itstep.services.ArtistService;
 import org.itstep.services.SongService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 
@@ -25,7 +33,10 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String searchPage() {
+    public String searchPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
         return "main/search";
     }
 
@@ -34,8 +45,27 @@ public class MainController {
         model.addAttribute("albums", albumService.findByAlbumNameContainingIgnoreCase(firstLetters));
         model.addAttribute("artists", artistService.findByNickNameContainingIgnoreCase(firstLetters));
         model.addAttribute("songs", songService.findBySongNameContainingIgnoreCase(firstLetters));
-        return "search";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
+        return "main/search";
     }
+
+@PostMapping("/autocomplete")
+@ResponseBody
+public List<String> autocomplete(@RequestParam("query") String query) {
+    List<String> results = new ArrayList<>();
+
+    // Здесь выполните поиск по вашим сущностям (альбомам, исполнителям, песням) и добавьте результаты в список results.
+
+    // Пример для альбомов:
+    List<Album> albums = albumService.findByAlbumNameContainingIgnoreCase(query);
+    for (Album album : albums) {
+        results.add(album.getAlbumName());
+    }
+
+    return results;
+}
     @GetMapping("/search2")
     public String searchPage2() {
         return "main/search2";

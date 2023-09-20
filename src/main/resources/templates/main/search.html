@@ -2,12 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
-    <!-- Подключаем стили Bootstrap -->
+    <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- Навигационное меню Bootstrap -->
 <nav class="navbar navbar-expand navbar-light bg-light">
     <a class="navbar-brand" href="#">
         <img src="/photo/spoti.png" alt="Spoti Logo" width="35" height="35">
@@ -36,30 +34,42 @@
     </ul>
 </nav>
 <div class="container mt-5">
-    <h2>Top Playlists</h2>
-    <div th:each="album:${albumsRock}">
-        <a th:href="@{albums/{id}(id=${album.getId()})}"
-           th:text="${album.getAlbumName()}">album</a>
-        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    <label for="query" class="form-label" style="font-size: 18px;">Введите интересующую песню, альбом или артиста:</label>
+
+    <form th:method="POST" th:action="@{/search}" class="mb-4">
+        <div class="input-group">
+            <input type="text" id="query" name="query" class="form-control" placeholder="Search" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <div th:if="${not #lists.isEmpty(albums)}">
+        <h2>Альбомы:</h2>
+        <ul class="list-group">
+            <li th:each="album : ${albums}" class="list-group-item">
+                <a th:href="@{albums/{id}(id=${album.getId()})}" th:text="${album.getAlbumName()}">album</a>
+            </li>
+        </ul>
     </div>
 
-    <div th:each="album:${albumsRap}">
-        <a th:href="@{albums/{id}(id=${album.getId()})}"
-           th:text="${album.getAlbumName()}">album</a>
-        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+    <div th:if="${not #lists.isEmpty(artists)}">
+        <h2>Исполнители:</h2>
+        <ul class="list-group">
+            <li th:each="artist: ${artists}" class="list-group-item">
+                <a th:href="@{artists/{id}(id=${artist.getId()})}" th:text="${artist.getNickName()}">artist</a>
+            </li>
+        </ul>
     </div>
-    <div th:each="album:${albumsHip}">
-        <a th:href="@{albums/{id}(id=${album.getId()})}"
-           th:text="${album.getAlbumName()}">album</a>
-        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
-    </div>
-    <div th:each="album:${albumsMetal}">
-        <a th:href="@{albums/{id}(id=${album.getId()})}"
-           th:text="${album.getAlbumName()}">album</a>
-        <img th:src="${album.getPhotoFilePath()}" alt="Album Photo" width="30" height="30">
+
+    <div th:if="${not #lists.isEmpty(songs)}">
+        <h2>Песни:</h2>
+        <ul class="list-group">
+            <li th:each="song:${songs}" class="list-group-item">
+                <a th:href="@{songs/{id}(id=${song.getId()})}" th:text="${song.getSongName()}">song</a>
+            </li>
+        </ul>
     </div>
 </div>
-
 <!-- Подключаем скрипты Bootstrap (необходимы для работы некоторых компонентов) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

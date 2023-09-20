@@ -1,18 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" >
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="CodeHim">
+    <title>Audio Player with Playlist Example </title>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-<p th:text="${song.getSongName()}">VALUE</p>
-<p th:text="${song.getId()}">VALUE</p>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/photo/spoti.png" alt="Spoti Logo" width="35" height="35">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="color:#000000">Home</a>
+            </li>
+        </ul>
+    </div>
+    <div class="ml-auto">
+        <a class="nav-link" href="/search" style="color:#000000">Search</a>
+    </div>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#000000">
+                Your Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
+                <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+                <a class="dropdown-item" th:href="@{/listeners/{id}/artists(id=${listener.getId()})}">Liked Artists</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<main class="mt-4">
+    <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
+        <div class="simp-playlist">
+            <ul style="text-align: center;">
+            </ul>
+            <ul>
 
-<a th:href="@{/songs/{id}/edit(id=${song.getId()})}">Edit</a>
+                    <li style="display: flex; align-items: center;">
+                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
+                        <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
+                        <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
 
-<form th:method="DELETE" th:action="@{/songs/{id}(id=${song.getId()})}">
-    <input type="submit" value="Delete"/>
-</form>
+                        <!-- Проверяем, добавлена ли песня к слушателю, и отображаем соответствующую кнопку -->
+                        <th:block th:if="${songAdded}">
+                            <button style="margin-left: auto; margin-right: 10px;" class="btn btn-success" disabled>Добавлена</button>
+                        </th:block>
+
+                        <th:block th:unless="${songAdded}">
+                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener2}" th:object="${listenerSong}">
+                                <input type="hidden" name="songId" th:value="${song.getId()}" />
+                                <input type="submit" value="Добавить песню" class="btn btn-success" />
+                            </form>
+                        </th:block>
+                    </li>
+
+            </ul>
+        </div>
+        <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
+    </div>
+
+</main>
+
+<!-- <a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a> -->
+<br/>
+<script th:src="@{/js/script.js}"  src="../js/script.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
