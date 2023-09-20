@@ -41,7 +41,8 @@ public class ListenerAlbumController {
     @PostMapping("/addAlbumToListener")
     public String addSongToListener(//@PathVariable("id") int id, @PathVariable("id2") int id2,
                                      @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum
-                                    , @RequestParam("albumId") int albumId
+                                    , @RequestParam("albumId") int albumId,
+                                    @RequestParam("artistId") int artistId
                   ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
@@ -50,7 +51,24 @@ public class ListenerAlbumController {
         listenerAlbum.setAlbum(albumService.findById(albumId));
         listenerAlbum.setListener(listenerDetails.getListener());
         listenerAlbumService.save(listenerAlbum);
-        String redirectUrl = "redirect:/albums/" + albumId;
+        String redirectUrl = "redirect:/artists/" + artistId;
+        return redirectUrl;
+    }
+
+    @PostMapping("/addAlbumToListener2")
+    public String addSongToListener2(//@PathVariable("id") int id, @PathVariable("id2") int id2,
+                                    @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum,
+                                     @RequestParam("albumId") int albumId
+                                     , @RequestParam("artistId") int artistId
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        //  model.addAttribute("listener",listenerDetails.getListener());
+
+        listenerAlbum.setAlbum(albumService.findById(albumId));
+        listenerAlbum.setListener(listenerDetails.getListener());
+        listenerAlbumService.save(listenerAlbum);
+        String redirectUrl = "redirect:/artists/" + artistId;
         return redirectUrl;
     }
 

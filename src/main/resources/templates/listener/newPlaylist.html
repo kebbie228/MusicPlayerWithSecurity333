@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello</title>
+  <!-- Подключаем стили Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="CodeHim">
+  <title>Audio Player with Playlist Example </title>
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css">
+
+  <style>
+    /* Добавляем стили для красивого вывода альбомов */
+    .album-container {
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+      display: inline-block;
+      width: 200px; /* Фиксированная ширина контейнера */
+      height: 250px; /* Фиксированная высота контейнера */
+      vertical-align: top; /* Выравнивание по верхнему краю */
+    }
+
+    .large-image-container {
+      width: 150px; /* Ширина контейнера для фотографии */
+      height: 150px; /* Высота контейнера для фотографии */
+      margin: 0 auto 10px auto; /* Отступ снизу контейнера */
+      text-align: center; /* Выравнивание содержимого по центру */
+      border: 2px solid #000; /* Граница для контейнера с фотографией */
+      border-radius: 10px; /* Скругление углов для контейнера с фотографией */
+      overflow: hidden; /* Скрытие лишней части изображения, если оно больше контейнера */
+    }
+
+    .album-image {
+      max-width: 100%; /* Максимальная ширина изображения (заполняет контейнер) */
+      max-height: 100%; /* Максимальная высота изображения (заполняет контейнер) */
+    }
+
+    .album-title {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .delete-button {
+      margin-top: 10px; /* Отступ сверху кнопки */
+    }
+    .album-title {
+      font-size: 16px; /* Размер шрифта 16px (или другой по вашему выбору) */
+      margin-top: 5px;
+      color: #000000; /* Черный цвет текста */
+      text-decoration: none; /* Убираем подчеркивание ссылки */
+      display: block; /* Делаем текст ссылки блочным элементом, чтобы он был между изображением и кнопкой */
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <!-- Форма для создания альбома -->
+  <form th:method="POST" th:action="@{/albums/createPlaylist}" th:object="${album}" enctype="multipart/form-data" class="album-form">
+    <div class="row justify-content-center">
+      <div class="album-container">
+        <input type="file" name="imageFile" id="imageFileInput" style="display: none;" accept="image/*" />
+        <label for="imageFileInput">
+          <div class="large-image-container">
+            <img src="#" alt="Album Photo" class="album-image" style="cursor: pointer;">
+          </div>
+        </label>
+        <!-- Вместо ссылки добавляем поле ввода для текста -->
+        <input type="text" th:field="*{albumName}" id="name" class="form-control" placeholder="Enter album name" style="margin-bottom: 10px;" />
+
+        <!-- Остальные элементы формы -->
+        <div style="color:red" th:if="${#fields.hasErrors('albumName')}" th:errors="*{albumName}" class="error-message">albumName Error</div>
+      </div>
+    </div>
+
+    <input type="submit" value="Create!" class="btn btn-primary" />
+  </form>
+</div>
+
+<script th:src="@{/js/script.js}"  src="../js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

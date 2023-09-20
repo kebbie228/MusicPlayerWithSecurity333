@@ -1,10 +1,10 @@
 
-INSERT INTO artist(nick_name) VALUES('QuEen');
-INSERT INTO artist(nick_name) VALUES('Deftones');
-INSERT INTO artist(nick_name) VALUES('Joji');
-INSERT INTO artist(nick_name) VALUES('Led Zepplin');
-INSERT INTO artist(nick_name) VALUES('The Eagles');
-INSERT INTO artist(nick_name) VALUES('Pink Floyd');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Queen','photo/queenava.jpg');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Deftones','photo/deftonesava.jpg');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Joji','photo/jojiava.png');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Led Zepplin','photo/Led Zepplinava.jpg');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('The Eagles','photo/The Eaglesava.jpg');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Pink Floyd','photo/Pink Floydava.jpg');
 
 INSERT INTO album(album_name,artist_id,photo_file_path) VALUES('Queen Album 1',1,'photo/Queen-TheShowMustGoOn.jpg');
 INSERT INTO album(album_name,artist_id,photo_file_path) VALUES('Deftones Album 1',2,'photo/deftones-doYouBelieve.jpg');
@@ -41,13 +41,13 @@ INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_f
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Hey You',2020,6,8,'Pink Floyd-Hey You.mp3','photo/Comfortably Numb, Pink Floyd.jpg');
 
 --7
-INSERT INTO artist(nick_name) VALUES('Eminem');
+INSERT INTO artist(nick_name,photo_file_path) VALUES('Eminem','photo/eminemava.jpg');
 --9
 INSERT INTO album(album_name,photo_file_path) VALUES('Hip-hop','photo/hip-hop.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Ass Like That',2020,7,9,'Eminem - Ass Like That.mp3','photo/eminem.png');
-INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Lose Yourself',2020,6,9,'Eminem - Lose Yourself.mp3','photo/eminem.png');
+INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Lose Yourself',2020,6,7,'Eminem - Lose Yourself.mp3','photo/eminem.png');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Sextape',2011,2,9,'Deftones – Sextape.mp3','photo/deftones-doYouBelieve.jpg');
-INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Venom',2020,6,9,'Eminem - Venom.mp3','photo/eminem.png');
+INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Venom',2020,7,9,'Eminem - Venom.mp3','photo/eminem.png');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Gimme love',2021,3,9,'Joji_-_Gimme_Love_(musmore.com).mp3','photo/joji-gimmelove.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('My Own Summer',2013,2,9,'Deftones – My Own Summer (Shove It).mp3','photo/deftones-myOwnSummer.jpg');
 INSERT INTO song(song_name,song_year,artist_id, album_id,audio_file_path,photo_file_path) VALUES('Yeah Right',2019,3,9,'Joji_-_Yeah_Right_(musmore.com).mp3','photo/joji1.jpg');

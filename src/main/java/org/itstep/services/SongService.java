@@ -2,6 +2,7 @@ package org.itstep.services;
 
 
 import org.itstep.model.Album;
+import org.itstep.model.Artist;
 import org.itstep.model.Listener;
 import org.itstep.model.Song;
 import org.itstep.repositories.SongRepository;
@@ -70,5 +71,8 @@ public class SongService {
     //dangerous
    public List<Song> findByListeners(Listener listener){
         return songRepository.findByListeners(listener);
-   };
+   }
+   public List<Song> findByArtist(Artist artist){
+        return songRepository.findByArtist(artist);
+   }
 }

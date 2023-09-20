@@ -18,6 +18,10 @@ public class Artist {
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String nickName;
 
+    @Column(name = "photo_file_path")
+    private String photoFilePath;
+
+
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   private  List<Song> songs;
 
@@ -30,6 +34,14 @@ public class Artist {
 
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
+    }
+
+    public String getPhotoFilePath() {
+        return photoFilePath;
+    }
+
+    public void setPhotoFilePath(String photoFilePath) {
+        this.photoFilePath = photoFilePath;
     }
 
     public Artist() {

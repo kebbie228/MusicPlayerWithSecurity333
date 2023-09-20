@@ -2,6 +2,7 @@ package org.itstep.services;
 
 
 import org.itstep.model.Album;
+import org.itstep.model.Artist;
 import org.itstep.model.Listener;
 import org.itstep.model.Song;
 import org.itstep.repositories.AlbumRepository;
@@ -44,5 +45,9 @@ public class AlbumService {
     public List<Album> findByListeners(Listener listener){
         return albumRepository.findByListeners(listener);
     };
+    public List<Album> findByArtist(Artist artist){
+        return albumRepository.findByArtist(artist);
+    }
+
 
 }

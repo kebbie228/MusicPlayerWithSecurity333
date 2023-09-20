@@ -333,3 +333,18 @@ if (document.querySelector('#simp')) {
   ap_simp.insertBefore(simp_player, simp_playlist);
   simp_startScript();
 }
+document.addEventListener("DOMContentLoaded", function() {
+  const imageFileInput = document.getElementById("imageFileInput");
+  const albumImage = document.querySelector(".album-image");
+
+  imageFileInput.addEventListener("change", function() {
+    const file = imageFileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        albumImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});

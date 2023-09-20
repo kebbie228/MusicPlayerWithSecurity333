@@ -162,6 +162,28 @@ private final SongService songService;
         model.addAttribute("albums", albumService.findByAlbumNameContainingIgnoreCase(firstLetters));
         return "album/search";
     }
+    @PostMapping("/createPlaylist")
+    public String createPlaylist(@ModelAttribute("album") Album album,
+    @RequestParam("imageFile") MultipartFile imageFile,
+     @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum) throws IOException
+    {
+        if (!imageFile.isEmpty()) {
+            File dir = null; //Файловая система
+            //dir = new File("src/main/resources/static/album_photo");
+            dir = new File("target/classes/static/photo");
+            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
+            album.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
+        }
+        albumService.save(album);
+        listenerAlbum.setAlbum(album);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        listenerAlbum.setListener(listenerDetails.getListener());
+        listenerAlbumService.save(listenerAlbum);
+
+        String redirectUrl = "redirect:/albums/" + album.getId();
+        return redirectUrl;
+    }
 
 
 }

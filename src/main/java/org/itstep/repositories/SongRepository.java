@@ -1,6 +1,7 @@
 package org.itstep.repositories;
 
 import org.itstep.model.Album;
+import org.itstep.model.Artist;
 import org.itstep.model.Listener;
 import org.itstep.model.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,9 @@ public interface SongRepository extends JpaRepository<Song,Integer> {
     List<Song> findByListeners(Listener listener);
 
   List<Song> findBySongNameContainingIgnoreCase(String firstLetters);
+    List<Song> findByArtist(Artist artist);
 
-  //  List<Song> findBySongNameContainingIgnoreCase(String keyword);
+
+    //  List<Song> findBySongNameContainingIgnoreCase(String keyword);
 
 }
