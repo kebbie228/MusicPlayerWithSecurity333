@@ -74,7 +74,10 @@ model.addAttribute("artistsHello", artists);
 
 
     @GetMapping("/createPlaylist")
-    public String newPlaylist( @ModelAttribute("album") Album album,@ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum){
+    public String newPlaylist(Model model, @ModelAttribute("album") Album album,@ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
         return "listener/newPlaylist";
     }
 }

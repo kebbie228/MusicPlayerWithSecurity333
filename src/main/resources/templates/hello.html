@@ -79,7 +79,7 @@
     </ul>
 </nav>
 
-<h2 style="color: #000; margin-top: 30px;" align="center">Топ прослушиваемых альбомов:</h2>
+<h2 style="color: #000; margin-top: 30px;" align="center">Топ прослушиваемых жанров:</h2>
 <div class="row justify-content-center">
     <div th:each="album:${albumsHello}" class="album-container">
         <img th:src="|/${album.getPhotoFilePath()}|" alt="Album Photo" class="album-image">

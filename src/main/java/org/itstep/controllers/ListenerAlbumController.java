@@ -41,8 +41,8 @@ public class ListenerAlbumController {
     @PostMapping("/addAlbumToListener")
     public String addSongToListener(//@PathVariable("id") int id, @PathVariable("id2") int id2,
                                      @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum
-                                    , @RequestParam("albumId") int albumId,
-                                    @RequestParam("artistId") int artistId
+                                    , @RequestParam("albumId") int albumId
+
                   ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
@@ -51,7 +51,7 @@ public class ListenerAlbumController {
         listenerAlbum.setAlbum(albumService.findById(albumId));
         listenerAlbum.setListener(listenerDetails.getListener());
         listenerAlbumService.save(listenerAlbum);
-        String redirectUrl = "redirect:/artists/" + artistId;
+        String redirectUrl = "redirect:/albums/" + albumId;
         return redirectUrl;
     }
 
