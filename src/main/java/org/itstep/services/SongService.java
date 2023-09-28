@@ -1,10 +1,7 @@
 package org.itstep.services;
 
 
-import org.itstep.model.Album;
-import org.itstep.model.Artist;
-import org.itstep.model.Listener;
-import org.itstep.model.Song;
+import org.itstep.model.*;
 import org.itstep.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +56,9 @@ public class SongService {
 
     public List<Song> findByAlbum(Album album){
       return songRepository.findByAlbum(album);
+    }
+    public List<Song> findByPlaylist(Playlist playlist){
+      return songRepository.findByPlaylist(playlist);
     }
 
 

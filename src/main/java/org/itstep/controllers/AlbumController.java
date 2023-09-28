@@ -162,28 +162,61 @@ private final SongService songService;
         model.addAttribute("albums", albumService.findByAlbumNameContainingIgnoreCase(firstLetters));
         return "album/search";
     }
-    @PostMapping("/createPlaylist")
-    public String createPlaylist(@ModelAttribute("album") Album album,
-    @RequestParam("imageFile") MultipartFile imageFile,
-     @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum) throws IOException
-    {
-        if (!imageFile.isEmpty()) {
-            File dir = null; //Файловая система
-            //dir = new File("src/main/resources/static/album_photo");
-            dir = new File("target/classes/static/photo");
-            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
-            album.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
-        }
-        albumService.save(album);
-        listenerAlbum.setAlbum(album);
+//    @PostMapping("/createPlaylist")
+//    public String createPlaylist(@ModelAttribute("album") Album album,
+//    @RequestParam("imageFile") MultipartFile imageFile,
+//     @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum) throws IOException
+//    {
+//        if (!imageFile.isEmpty()) {
+//            File dir = null; //Файловая система
+//            //dir = new File("src/main/resources/static/album_photo");
+//            dir = new File("target/classes/static/photo");
+//            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
+//            album.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
+//        }
+//        albumService.save(album);
+//        listenerAlbum.setAlbum(album);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+//        listenerAlbum.setListener(listenerDetails.getListener());
+//        listenerAlbumService.save(listenerAlbum);
+//
+//        String redirectUrl = "redirect:/albums/" + album.getId();
+//        return redirectUrl;
+//    }
+
+    @GetMapping("/{id}/playlist")
+    public String test(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong,
+                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum){
+        model.addAttribute("album",albumService.findById(id));
+        List<Song> songs = songService.findByAlbum(albumService.findById(id));
+        model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
-        listenerAlbum.setListener(listenerDetails.getListener());
-        listenerAlbumService.save(listenerAlbum);
+        model.addAttribute("listener",listenerDetails.getListener());
 
-        String redirectUrl = "redirect:/albums/" + album.getId();
-        return redirectUrl;
+        int listenerId = listenerDetails.getListener().getId(); // Получаем идентификатор слушателя
+
+        // Создаем Map для хранения информации о каждой песне (songId -> songAdded)
+        Map<Integer, Boolean> songAddedMap = new HashMap<>();
+
+        for (Song song : songs) {
+            int songId = song.getId();
+            boolean songAdded = listenerSongService.hasSong(listenerId, songId);
+            songAddedMap.put(songId, songAdded);
+        }
+
+        model.addAttribute("songAddedMap", songAddedMap); // Передаем информацию в модель
+
+   //     boolean albumAdded = listenerAlbumService.hasAlbum(listenerId,albumService.findById(id).getId());
+     //   model.addAttribute("albumAdded", albumAdded);
+
+
+        return "album/index2";
     }
+
+
 
 
 }

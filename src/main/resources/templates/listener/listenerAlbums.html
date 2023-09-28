@@ -78,17 +78,30 @@
   </ul>
 </nav>
 <div  class="container mt-5 text-center">
-<h1>Ваши добавленные альбомы</h1>
-<h1>  <a href="/createPlaylist" class="btn btn-primary" style="margin-top: 20px;">Создать свой плейлист</a></h1>
-<div th:each="album:${albums}" class="album-container">
-  <img th:src="|/${album.getPhotoFilePath()}|" alt="Album Photo" class="album-image">
-  <a th:href="@{/albums/{id}(id=${album.getId()})}" class="album-title" th:text="${album.getAlbumName()}"  style="color:#000000">album</a>
-  <!-- Добавляем кнопку "Удалить альбом" с JavaScript для отправки DELETE запроса -->
-  <form th:method="DELETE" th:action="@{/listenerAlbums/{id}/{id2}(id=${listener.getId()}, id2=${album.getId()})}">
-    <button type="submit" class="btn btn-danger delete-button">Удалить альбом</button>
-  </form>
-</div>
+  <h1>Ваши добавленные альбомы</h1>
+  <div th:if="${not #lists.isEmpty(albums)}" th:each="album:${albums}" class="album-container">
+    <img th:src="|/${album.getPhotoFilePath()}|" alt="Album Photo" class="album-image">
+    <a th:href="@{/albums/{id}(id=${album.getId()})}" class="album-title" th:text="${album.getAlbumName()}" style="color:#000000">album</a>
+    <!-- Добавляем кнопку "Удалить альбом" с JavaScript для отправки DELETE запроса -->
+    <form th:method="DELETE" th:action="@{/listenerAlbums/{id}/{id2}(id=${listener.getId()}, id2=${album.getId()})}">
+      <button type="submit" class="btn btn-danger delete-button">Удалить альбом</button>
+    </form>
+  </div>
+  <div th:if="${#lists.isEmpty(albums)}" class="alert alert-info" role="alert">
+    <strong>У вас нет добавленных альбомов</strong>
+  </div>
 
+
+  <h1>Ваши плейлесты</h1>
+  <h1>  <a href="/playlists/createPlaylist" class="btn btn-primary" style="margin-top: 20px;">Создать свой плейлист</a></h1>
+  <div th:each="playlist:${playlists}" class="album-container">
+    <img th:src="|/${playlist.getPhotoFilePath()}|" alt="Album Photo" class="album-image">
+    <a th:href="@{/playlists/{id}(id=${playlist.getId()})}" class="album-title" th:text="${playlist.getPlaylistName()}"  style="color:#000000">album</a>
+    <!-- Добавляем кнопку "Удалить альбом" с JavaScript для отправки DELETE запроса -->
+    <form th:method="DELETE" th:action="@{/listenerPlaylists/{id}/{id2}(id=${listener.getId()}, id2=${playlist.getId()})}">
+      <button type="submit" class="btn btn-danger delete-button">Удалить плейлист</button>
+    </form>
+  </div>
 
 </div>
 

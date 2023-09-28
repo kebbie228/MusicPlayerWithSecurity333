@@ -42,7 +42,39 @@ public class Listener {
     )
     private List<Album> albums;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="listener_playlist",
+            joinColumns = @JoinColumn(name="listener_id"),
+            inverseJoinColumns = @JoinColumn(name = "playlist_id")
+    )
+        private List<Playlist> playlists;
+
     public Listener() {
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
     }
 
     public Listener(int id, String listenerName) {

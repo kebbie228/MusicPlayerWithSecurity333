@@ -1,11 +1,11 @@
 package org.itstep.controllers;
 
 
-import org.itstep.model.Album;
 import org.itstep.model.Listener;
 import org.itstep.model.ListenerSong;
 import org.itstep.services.AlbumService;
 import org.itstep.services.ListenerService;
+import org.itstep.services.PlaylistService;
 import org.itstep.services.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +22,13 @@ public class ListenerController {
     private final ListenerService listenerService;
     private final SongService songService;
     private final AlbumService albumService;
+    private final PlaylistService playlistService;
 
-    public ListenerController(ListenerService listenerService, SongService songService, AlbumService albumService) {
+    public ListenerController(ListenerService listenerService, SongService songService, AlbumService albumService, PlaylistService playlistService) {
         this.listenerService = listenerService;
         this.songService = songService;
         this.albumService = albumService;
+        this.playlistService = playlistService;
     }
 
     @GetMapping()
@@ -58,6 +60,7 @@ public class ListenerController {
         model.addAttribute("listener",listenerService.findById(id));
         //dangerous
         model.addAttribute("albums",albumService.findByListeners(listenerService.findById(id)));
+        model.addAttribute("playlists",playlistService.findByListeners(listenerService.findById(id)));
         return "listener/listenerAlbums";
     }
 

@@ -43,7 +43,7 @@
   <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
     <div class="simp-playlist">
       <ul>
-        <th:block th:each="song : ${songs}">
+        <th:block th:if="${not #lists.isEmpty(songs)}" th:each="song : ${songs}">
           <li style="display: flex; align-items: center;">
             <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
             <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
@@ -51,15 +51,17 @@
             <form style="margin-left: auto; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}(id=${song.getId()},id2=${listener.getId()})}">
               <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
             </form>
-
           </li>
-
+        </th:block>
+        <th:block th:if="${#lists.isEmpty(songs)}">
+          <li style="display: flex; justify-content: center; align-items: center; height: 50px;">
+            У вас нет понравившихся песен
+          </li>
         </th:block>
       </ul>
     </div>
     <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
   </div>
-
 </main>
 
 

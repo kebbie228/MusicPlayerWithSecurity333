@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${listenerSong}" method="POST" th:action="@{/listenerSongs/addSongToListener}">
+  <!-- Выпадающий список действий -->
+  <select id="actionSelect" name="action" onchange="handleActionChange()">
+    <option value="addSong">Добавить песню</option>
+    <option value="addToPlaylist">Добавить в плейлист</option>
+  </select>
+
+  <!-- Вложенный выпадающий список для выбора плейлиста -->
+  <select id="playlistSelect" name="playlistId" style="display: none;">
+    <option value="">Выберите плейлист</option>
+    <th:block th:each="playlist : ${playlists}">
+      <option th:value="${playlist.id}" th:text="${playlist.playlistName}"></option>
+    </th:block>
+  </select>
+
+  <!-- Остальные поля и кнопка для добавления -->
+  <!-- ... -->
+
+  <input type="submit" value="Выполнить" />
+
+<script>
+  function handleActionChange() {
+    var actionSelect = document.getElementById("actionSelect");
+    var playlistSelect = document.getElementById("playlistSelect");
+
+    // Отобразить или скрыть вложенный выпадающий список в зависимости от выбора
+    if (actionSelect.value === "addToPlaylist") {
+      playlistSelect.style.display = "block";
+    } else {
+      playlistSelect.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -31,13 +31,34 @@ public class Song {
     @JoinColumn(name = "album_id", referencedColumnName = "album_id")
     private Album album;
 
+    @ManyToOne()
+    @JoinColumn(name = "playlist_id", referencedColumnName = "playlist_id")
+    private Playlist playlist;
+
     @Column(name = "audio_file_path")
     private String audioFilePath;
-   @Column(name = "photo_file_path")
-   private String photoFilePath;
+    @Column(name = "photo_file_path")
+    private String photoFilePath;
 
-   @ManyToMany(mappedBy = "songs",cascade = CascadeType.ALL)
-   private List<Listener> listeners;
+    @ManyToMany(mappedBy = "songs",cascade = CascadeType.ALL)
+    private List<Listener> listeners;
+
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
+
+    public List<Listener> getListeners() {
+        return listeners;
+    }
+
+    public void setListeners(List<Listener> listeners) {
+        this.listeners = listeners;
+    }
+
 
     public String getAudioFilePath() {
         return audioFilePath;

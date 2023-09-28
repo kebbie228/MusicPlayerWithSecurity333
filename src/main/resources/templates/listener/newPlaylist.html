@@ -86,7 +86,7 @@
 </nav>
 <div class="container mt-5">
   <!-- Форма для создания альбома -->
-  <form th:method="POST" th:action="@{/albums/createPlaylist}" th:object="${album}" enctype="multipart/form-data" class="album-form">
+  <form th:method="POST" th:action="@{/playlists/createPlaylist}" th:object="${playlist}" enctype="multipart/form-data" class="album-form">
     <div class="row justify-content-center">
       <div class="album-container">
         <input type="file" name="imageFile" id="imageFileInput" style="display: none;" accept="image/*" />
@@ -96,10 +96,10 @@
           </div>
         </label>
         <!-- Вместо ссылки добавляем поле ввода для текста -->
-        <input type="text" th:field="*{albumName}" id="name" class="form-control" placeholder="Enter album name" style="margin-bottom: 10px;" />
+        <input type="text" th:field="*{playlistName}" id="name" class="form-control" placeholder="Enter album name" style="margin-bottom: 10px;" />
 
         <!-- Остальные элементы формы -->
-        <div style="color:red" th:if="${#fields.hasErrors('albumName')}" th:errors="*{albumName}" class="error-message">albumName Error</div>
+        <div style="color:red" th:if="${#fields.hasErrors('playlistName')}" th:errors="*{playlistName}" class="error-message">playlistName Error</div>
       </div>
     </div>
 

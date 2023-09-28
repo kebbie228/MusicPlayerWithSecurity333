@@ -43,12 +43,12 @@
     <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
         <div class="simp-playlist">
             <ul style="text-align: center;">
-                <form th:method="POST" th:action="@{/listenerAlbums/addAlbumToListener}" th:object="${listenerAlbum}">
-                    <input type="hidden" name="albumId" th:value="${album.getId()}" />
-                    <th:block th:if="${albumAdded}">
-                        <button class="btn btn-success" disabled>Альбом добавлен</button>
+                <form th:method="POST" th:action="@{/listenerPlaylists/addPlaylistToListener}" th:object="${listenerPlaylist}">
+                    <input type="hidden" name="albumId" th:value="${playlist.getId()}" />
+                    <th:block th:if="${playlistAdded}">
+                        <button class="btn btn-success" disabled>Плейлист добавлен</button>
                     </th:block>
-                    <th:block th:unless="${albumAdded}">
+                    <th:block th:unless="${playlistAdded}">
                         <input type="submit" value="Добавить альбом" class="btn btn-success" />
                     </th:block>
                 </form>
@@ -66,16 +66,13 @@
                         </th:block>
 
                         <th:block th:unless="${songAddedMap[song.getId()]}">
-                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
+                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener2}" th:object="${listenerSong}">
                                 <input type="hidden" name="songId" th:value="${song.getId()}" />
-                                <input type="hidden" name="albumId" th:value="${album.getId()}" />
                                 <input type="submit" value="Добавить песню" class="btn btn-success" />
                             </form>
                         </th:block>
                     </li>
-
                 </th:block>
-
             </ul>
         </div>
         <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
