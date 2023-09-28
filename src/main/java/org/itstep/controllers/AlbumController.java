@@ -31,13 +31,16 @@ public class AlbumController {
     private final ArtistService artistService;
     private  final ListenerSongService listenerSongService;
     private final ListenerAlbumService listenerAlbumService;
+    private final ListenerService listenerService;
+
 private final SongService songService;
     @Autowired
-    public AlbumController(AlbumService albumService, ArtistService artistService, ListenerSongService listenerSongService, ListenerAlbumService listenerAlbumService, SongService songService) {
+    public AlbumController(AlbumService albumService, ArtistService artistService, ListenerSongService listenerSongService, ListenerAlbumService listenerAlbumService, ListenerService listenerService, SongService songService) {
         this.albumService = albumService;
         this.artistService = artistService;
         this.listenerSongService = listenerSongService;
         this.listenerAlbumService = listenerAlbumService;
+        this.listenerService = listenerService;
         this.songService = songService;
     }
 
@@ -211,6 +214,8 @@ private final SongService songService;
 
    //     boolean albumAdded = listenerAlbumService.hasAlbum(listenerId,albumService.findById(id).getId());
      //   model.addAttribute("albumAdded", albumAdded);
+
+         model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
 
 
         return "album/index2";

@@ -5,30 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-<form th:object="${listenerSong}" method="POST" th:action="@{/listenerSongs/addSongToListener}">
-  <!-- Выпадающий список действий -->
-  <select id="actionSelect" name="action" onchange="handleActionChange()">
-    <option value="addSong">Добавить песню</option>
-    <option value="addToPlaylist">Добавить в плейлист</option>
-  </select>
+<ul>
+  <div th:each="song : ${songs}">
+    <li style="display: flex; align-items: center;">
+      <!-- ... Ваш код для отображения информации о песне ... -->
+      <td><img th:src="|/${song.photoFilePath}|" alt="Album Photo" width="30" height="30"></td>
+      <td th:text="${song.songName}">Song Name</td>
+      <!-- Форма для выбора действия -->
+      <form th:object="${listenerSong}" method="POST" th:action="@{/listenerSongs/addSongToListener}">
+        <select id="actionSelect" name="action" onchange="handleActionChange(this)">
+          <option value="addSong">Добавить песню</option>
+          <option value="addToPlaylist">Добавить в плейлист</option>
+        </select>
 
-  <!-- Вложенный выпадающий список для выбора плейлиста -->
-  <select id="playlistSelect" name="playlistId" style="display: none;">
-    <option value="">Выберите плейлист</option>
-    <th:block th:each="playlist : ${playlists}">
-      <option th:value="${playlist.id}" th:text="${playlist.playlistName}"></option>
-    </th:block>
-  </select>
+        <!-- Вложенный выпадающий список для выбора плейлиста -->
+        <select id="playlistSelect" name="playlistId" style="display: none;">
+          <option value="">Выберите плейлист</option>
+          <div th:each="playlist : ${playlists}">
+            <option th:value="${playlist.id}" th:text="${playlist.playlistName}"></option>
+          </div>
+        </select>
 
-  <!-- Остальные поля и кнопка для добавления -->
-  <!-- ... -->
+        <!-- Остальные поля и кнопка для добавления -->
+        <!-- ... -->
 
-  <input type="submit" value="Выполнить" />
-
+        <input type="submit" value="Выполнить" />
+      </form>
+    </li>
+  </div>
+</ul>
 <script>
-  function handleActionChange() {
-    var actionSelect = document.getElementById("actionSelect");
-    var playlistSelect = document.getElementById("playlistSelect");
+  function handleActionChange(select) {
+    var actionSelect = select;
+    var playlistSelect = select.parentElement.querySelector("#playlistSelect");
 
     // Отобразить или скрыть вложенный выпадающий список в зависимости от выбора
     if (actionSelect.value === "addToPlaylist") {
@@ -38,6 +47,5 @@
     }
   }
 </script>
-
 </body>
 </html>

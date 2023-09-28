@@ -4,6 +4,7 @@ package org.itstep.services;
 import org.itstep.model.Listener;
 import org.itstep.repositories.ListenerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public class ListenerService {
     public void delete(int id){
         listenerRepository.deleteById(id);
     }
+
+
 }
