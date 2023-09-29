@@ -43,15 +43,20 @@
     <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
         <div class="simp-playlist">
             <ul style="text-align: center;">
-                <form th:method="POST" th:action="@{/listenerPlaylists/addPlaylistToListener}" th:object="${listenerPlaylist}">
-                    <input type="hidden" name="albumId" th:value="${playlist.getId()}" />
-                    <th:block th:if="${playlistAdded}">
-                        <button class="btn btn-success" disabled>Плейлист добавлен</button>
-                    </th:block>
-                    <th:block th:unless="${playlistAdded}">
-                        <input type="submit" value="Добавить альбом" class="btn btn-success" />
-                    </th:block>
+
+                <form th:method="DELETE" th:action="@{/listenerPlaylists/{id}/{id2}(id=${listener.getId()}, id2=${playlist.getId()})}">
+                    <button type="submit" class="btn btn-danger delete-button">Удалить плейлист</button>
                 </form>
+
+<!--                <form th:method="POST" th:action="@{/listenerPlaylists/addPlaylistToListener}" th:object="${listenerPlaylist}">-->
+<!--                    <input type="hidden" name="albumId" th:value="${playlist.getId()}" />-->
+<!--                    <th:block th:if="${playlistAdded}">-->
+<!--                        <button class="btn btn-success" disabled>Плейлист добавлен</button>-->
+<!--                    </th:block>-->
+<!--                    <th:block th:unless="${playlistAdded}">-->
+<!--                        <input type="submit" value="Добавить альбом" class="btn btn-success" />-->
+<!--                    </th:block>-->
+<!--                </form>-->
             </ul>
             <ul>
                 <th:block th:each="song : ${songs}">
@@ -66,8 +71,9 @@
                         </th:block>
 
                         <th:block th:unless="${songAddedMap[song.getId()]}">
-                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener2}" th:object="${listenerSong}">
+                            <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener4}" th:object="${listenerSong}">
                                 <input type="hidden" name="songId" th:value="${song.getId()}" />
+                                <input type="hidden" name="playlistId" th:value="${playlist.getId()}" />
                                 <input type="submit" value="Добавить песню" class="btn btn-success" />
                             </form>
                         </th:block>

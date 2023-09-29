@@ -31,9 +31,9 @@ public class Song {
     @JoinColumn(name = "album_id", referencedColumnName = "album_id")
     private Album album;
 
-    @ManyToOne()
-    @JoinColumn(name = "playlist_id", referencedColumnName = "playlist_id")
-    private Playlist playlist;
+//    @ManyToOne()
+//    @JoinColumn(name = "playlist_id", referencedColumnName = "playlist_id")
+//    private Playlist playlist;
 
     @Column(name = "audio_file_path")
     private String audioFilePath;
@@ -43,13 +43,25 @@ public class Song {
     @ManyToMany(mappedBy = "songs",cascade = CascadeType.ALL)
     private List<Listener> listeners;
 
-    public Playlist getPlaylist() {
-        return playlist;
+
+
+    @ManyToMany(mappedBy = "playlistSongs",cascade = CascadeType.ALL)
+    private List<Playlist> playlists;
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
     }
 
-    public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
     }
+    //    public Playlist getPlaylist() {
+//        return playlist;
+//    }
+//
+//    public void setPlaylist(Playlist playlist) {
+//        this.playlist = playlist;
+//    }
 
     public List<Listener> getListeners() {
         return listeners;

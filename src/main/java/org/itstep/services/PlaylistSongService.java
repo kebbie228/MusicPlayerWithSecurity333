@@ -17,6 +17,9 @@ public class PlaylistSongService {
     public PlaylistSong findByPlaylistAndSong (Song song, Playlist playlist){
         return playlistSongRepository.findByPlaylistAndSong(playlist,song);
     }
+//    public PlaylistSong findByPlaylist (Playlist playlist){
+//        return playlistSongRepository.findByPlaylist(playlist);
+//    }
     public void delete(PlaylistSong playlistSong){
         playlistSongRepository.delete(playlistSong);
     }

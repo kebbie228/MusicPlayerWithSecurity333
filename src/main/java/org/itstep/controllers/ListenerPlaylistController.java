@@ -34,7 +34,7 @@ public class ListenerPlaylistController {
         playlistService.findById(id);
         listenerService.findById(id2);
         listenerPlaylistService.delete(listenerPlaylistService.findByListenerAndPlaylist(listenerService.findById(id2), playlistService.findById(id)));
-
+        playlistService.delete(id);
         String redirectUrl = "redirect:/listeners/" + id2+"/albums";
         return redirectUrl;
     }

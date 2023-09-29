@@ -21,12 +21,14 @@ import java.util.Map;
 public class PlaylistController {
 
     private  final ListenerSongService listenerSongService;
+    private final PlaylistSongService playlistSongService;
     private final ListenerPlaylistService listenerPlaylistService;
     private final SongService songService;
     private final  PlaylistService playlistService;
 
-    public PlaylistController(ListenerSongService listenerSongService, ListenerPlaylistService listenerPlaylistService, SongService songService, PlaylistService playlistService) {
+    public PlaylistController(ListenerSongService listenerSongService, PlaylistSongService playlistSongService, ListenerPlaylistService listenerPlaylistService, SongService songService, PlaylistService playlistService) {
         this.listenerSongService = listenerSongService;
+        this.playlistSongService = playlistSongService;
         this.listenerPlaylistService = listenerPlaylistService;
         this.songService = songService;
         this.playlistService = playlistService;
@@ -34,12 +36,15 @@ public class PlaylistController {
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model, @ModelAttribute("listenerSong") ListenerSong listenerSong,
                         @ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist){
-        model.addAttribute("playlist",playlistService.findById(id));
-        List<Song> songs = songService.findByPlaylist(playlistService.findById(id));
-    //    model.addAttribute("songs",songService.f);
+
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+
+        model.addAttribute("playlist",playlistService.findById(id));
+        List<Song> songs = playlistService.findById(id).getPlaylistSongs();
+        model.addAttribute("songs",songs);
+
         model.addAttribute("listener",listenerDetails.getListener());
 
         int listenerId = listenerDetails.getListener().getId(); // Получаем идентификатор слушателя
@@ -55,9 +60,9 @@ public class PlaylistController {
 
         model.addAttribute("songAddedMap", songAddedMap); // Передаем информацию в модель
 
-        boolean playlistAdded = listenerPlaylistService.hasPlaylist(listenerId,playlistService.findById(id).getId());
+       boolean playlistAdded = listenerPlaylistService.hasPlaylist(listenerId,playlistService.findById(id).getId());
         model.addAttribute("playlistAdded", playlistAdded);
-        System.out.println(playlistService.findById(id).getPlaylistSongs());
+     //   System.out.println(playlistService.findById(id).getPlaylistSongs());
         return "playlist/index";
     }
     @GetMapping("/createPlaylist")

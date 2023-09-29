@@ -57,9 +57,9 @@ public class SongService {
     public List<Song> findByAlbum(Album album){
       return songRepository.findByAlbum(album);
     }
-    public List<Song> findByPlaylist(Playlist playlist){
-      return songRepository.findByPlaylist(playlist);
-    }
+//    public List<Song> findByPlaylist(Playlist playlist){
+//      return songRepository.findByPlaylist(playlist);
+//    }
 
 
 //    public List<Song> findBySongNameStartingWith(String firstLetters){

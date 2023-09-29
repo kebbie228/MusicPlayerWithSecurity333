@@ -21,12 +21,37 @@ public class Playlist {
     @Column(name = "photo_file_path")
     private String photoFilePath;
 
-    @OneToMany(mappedBy = "playlist",  cascade = CascadeType.ALL)
-    private List<Song> playlistSongs;
+//    @OneToMany(mappedBy = "playlist",  cascade = CascadeType.ALL)
+//    private List<Song> playlistSongs;
 
 
     @ManyToMany(mappedBy = "playlists",cascade = CascadeType.ALL)
     private List<Listener> listeners;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="playlist_song",
+            joinColumns = @JoinColumn(name="playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id")
+    )
+    private List<Song> playlistSongs;
+
+    public List<Listener> getListeners() {
+        return listeners;
+    }
+
+    public void setListeners(List<Listener> listeners) {
+        this.listeners = listeners;
+    }
+
+    public List<Song> getPlaylistSongs() {
+        return playlistSongs;
+    }
+
+    public void setPlaylistSongs(List<Song> playlistSongs) {
+        this.playlistSongs = playlistSongs;
+    }
+
 
     public Playlist() {
     }
@@ -61,11 +86,11 @@ public class Playlist {
         this.photoFilePath = photoFilePath;
     }
 
-    public List<Song> getPlaylistSongs() {
-        return playlistSongs;
-    }
-
-    public void setPlaylistSongs(List<Song> playlistSongs) {
-        this.playlistSongs = playlistSongs;
-    }
+//    public List<Song> getPlaylistSongs() {
+//        return playlistSongs;
+//    }
+//
+//    public void setPlaylistSongs(List<Song> playlistSongs) {
+//        this.playlistSongs = playlistSongs;
+//    }
 }

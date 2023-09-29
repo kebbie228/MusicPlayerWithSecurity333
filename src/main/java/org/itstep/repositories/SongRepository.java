@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface SongRepository extends JpaRepository<Song,Integer> {
     List<Song> findByAlbum(Album album);
-    List<Song> findByPlaylist(Playlist playlist);
+   // List<Song> findByPlaylist(Playlist playlist);
 
     //dangerous
     List<Song> findByListeners(Listener listener);

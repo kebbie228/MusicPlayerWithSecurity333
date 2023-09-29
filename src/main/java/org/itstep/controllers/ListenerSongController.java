@@ -35,6 +35,15 @@ public class ListenerSongController {
         return redirectUrl;
     }
 
+    @DeleteMapping("/{id}/{id2}/album")
+    public String delete2( @PathVariable("id") int id, @PathVariable("id2") int id2,  @RequestParam("albumId") int  albumId ){
+        songService.findById(id);
+        listenerService.findById(id2);
+        listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById(id2)));
+
+        String redirectUrl = "redirect:/albums/" + albumId;
+        return redirectUrl;
+    }
 //add song to listener
     //    @PostMapping("/addSongToListener/{id}/{id2}")
 
@@ -84,6 +93,22 @@ public class ListenerSongController {
         listenerSong.setListener(listenerDetails.getListener());
         listenerSongService.save(listenerSong);
         String redirectUrl = "redirect:/albums/" + albumId;
+        return redirectUrl;
+    }
+    @PostMapping("/addSongToListener4")
+    public String addSongToListener4(//@PathVariable("id") int id, @PathVariable("id2") int id2,
+                                     @ModelAttribute("listenerSong") ListenerSong listenerSong,
+                                     @RequestParam("songId") int songId,
+                                     @RequestParam("playlistId") int playlistId
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        //  model.addAttribute("listener",listenerDetails.getListener());
+
+        listenerSong.setSong(songService.findById(songId));
+        listenerSong.setListener(listenerDetails.getListener());
+        listenerSongService.save(listenerSong);
+        String redirectUrl = "redirect:/playlists/" + playlistId;
         return redirectUrl;
     }
 
