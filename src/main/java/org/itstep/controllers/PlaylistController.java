@@ -36,7 +36,7 @@ public class PlaylistController {
                         @ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist){
         model.addAttribute("playlist",playlistService.findById(id));
         List<Song> songs = songService.findByPlaylist(playlistService.findById(id));
-        model.addAttribute("songs",songService.findByPlaylist(playlistService.findById(id)));
+    //    model.addAttribute("songs",songService.f);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();

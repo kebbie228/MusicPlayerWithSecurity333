@@ -49,7 +49,7 @@ private final SongService songService;
 
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong,
-                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum,@ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist){
+                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum,@ModelAttribute("playlistSong") PlaylistSong playlistSong){
         model.addAttribute("album",albumService.findById(id));
         List<Song> songs = songService.findByAlbum(albumService.findById(id));
         model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));

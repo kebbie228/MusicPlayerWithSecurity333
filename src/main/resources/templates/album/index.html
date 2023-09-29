@@ -82,7 +82,7 @@
                             Добавить в плейлист
                         </button>
                         <div class="dropdown-menu">
-                            <form th:each="playlist : ${playlists}" th:method="POST" th:action="@{/listenerPlaylists/addSongToPlaylist}" th:object="${song}">
+                            <form th:each="playlist : ${playlists}" th:method="POST" th:action="@{/playlistSongs/addSongToPlaylist}" th:object="${playlistSong}">
                                 <input type="hidden" name="songId" th:value="${song.getId()}" />
                                 <input type="hidden" name="playlistId" th:value="${playlist.getId()}" />
                                 <input type="hidden" name="albumId" th:value="${album.getId()}" />
