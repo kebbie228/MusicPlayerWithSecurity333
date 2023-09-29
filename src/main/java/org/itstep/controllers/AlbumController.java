@@ -1,10 +1,7 @@
 package org.itstep.controllers;
 
 
-import org.itstep.model.Album;
-import org.itstep.model.ListenerAlbum;
-import org.itstep.model.ListenerSong;
-import org.itstep.model.Song;
+import org.itstep.model.*;
 import org.itstep.security.ListenerDetails;
 import org.itstep.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +49,7 @@ private final SongService songService;
 
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong,
-                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum){
+                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum,@ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist){
         model.addAttribute("album",albumService.findById(id));
         List<Song> songs = songService.findByAlbum(albumService.findById(id));
         model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
@@ -76,11 +73,28 @@ private final SongService songService;
 
         boolean albumAdded = listenerAlbumService.hasAlbum(listenerId,albumService.findById(id).getId());
         model.addAttribute("albumAdded", albumAdded);
-
-
-
-        model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
-
+//nachalo
+//        List<Playlist> playlists = listenerService.findById(listenerDetails.getListener().getId()).getPlaylists();
+//        Map<Integer, Boolean> songInPlaylistMap = new HashMap<>();
+//
+//        for (Song song : songs) {
+//            int songId = song.getId();
+//            boolean songInPlaylist = false;
+//
+//            for (Playlist playlist : playlists) {
+//                if (playlist.getPlaylistSongs().contains(song)) {
+//                    songInPlaylist = true;
+//                    break;
+//                }
+//            }
+//
+//            songInPlaylistMap.put(songId, songInPlaylist);
+//        }
+//
+//        model.addAttribute("songInPlaylistMap", songInPlaylistMap);
+//konec
+      model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
+        //   System.out.println(listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
 
         return "album/index";
     }

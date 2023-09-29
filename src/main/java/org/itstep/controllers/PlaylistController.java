@@ -57,7 +57,7 @@ public class PlaylistController {
 
         boolean playlistAdded = listenerPlaylistService.hasPlaylist(listenerId,playlistService.findById(id).getId());
         model.addAttribute("playlistAdded", playlistAdded);
-
+        System.out.println(playlistService.findById(id).getPlaylistSongs());
         return "playlist/index";
     }
     @GetMapping("/createPlaylist")
