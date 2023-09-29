@@ -78,6 +78,10 @@ private final SongService songService;
         model.addAttribute("albumAdded", albumAdded);
 
 
+
+        model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
+
+
         return "album/index";
     }
 
@@ -188,38 +192,6 @@ private final SongService songService;
 //        return redirectUrl;
 //    }
 
-    @GetMapping("/{id}/playlist")
-    public String test(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong,
-                        @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum){
-        model.addAttribute("album",albumService.findById(id));
-        List<Song> songs = songService.findByAlbum(albumService.findById(id));
-        model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
-        model.addAttribute("listener",listenerDetails.getListener());
-
-        int listenerId = listenerDetails.getListener().getId(); // Получаем идентификатор слушателя
-
-        // Создаем Map для хранения информации о каждой песне (songId -> songAdded)
-        Map<Integer, Boolean> songAddedMap = new HashMap<>();
-
-        for (Song song : songs) {
-            int songId = song.getId();
-            boolean songAdded = listenerSongService.hasSong(listenerId, songId);
-            songAddedMap.put(songId, songAdded);
-        }
-
-        model.addAttribute("songAddedMap", songAddedMap); // Передаем информацию в модель
-
-   //     boolean albumAdded = listenerAlbumService.hasAlbum(listenerId,albumService.findById(id).getId());
-     //   model.addAttribute("albumAdded", albumAdded);
-
-         model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
-
-
-        return "album/index2";
-    }
 
 
 
