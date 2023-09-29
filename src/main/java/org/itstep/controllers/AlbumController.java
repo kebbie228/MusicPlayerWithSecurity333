@@ -93,7 +93,8 @@ private final SongService songService;
 //
 //        model.addAttribute("songInPlaylistMap", songInPlaylistMap);
 //konec
-      model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
+
+        model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
         //   System.out.println(listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
 
         return "album/index";

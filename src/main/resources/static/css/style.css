@@ -43,7 +43,7 @@ a,a:hover,a:visited{color:#ddd;text-decoration:none;}
 #simp .simp-hide{max-height:0;}
 /* playlist */
 #simp ul{margin:5px 0 0;padding:0;list-style:none;max-height:245px;}
-#simp ul li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin:0;padding:8px 20px;cursor:pointer;}
+#simp ul li{white-space:nowrap;overflow:initial;text-overflow:ellipsis;display:block;margin:0;padding:8px 20px;cursor:pointer;}
 #simp ul li:last-child{padding-bottom:13px;}
 #simp ul li:nth-child(odd){background:#0e1621;}
 #simp ul li:hover{background:#242f3d;}
