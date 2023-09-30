@@ -68,7 +68,6 @@ public class PlaylistController {
 //nachalo
         List<Playlist> playlists = listenerService.findById(listenerDetails.getListener().getId()).getPlaylists();
         Map<Integer, Boolean> songInPlaylistMap = new HashMap<>();
-
         for (Song song : songs) {
             int songId = song.getId();
             boolean songInPlaylist = false;

@@ -55,6 +55,27 @@ public class ListenerSongController {
         return redirectUrl;
     }
 
+
+    @DeleteMapping("/{id}/{id2}/song")
+    public String delete4( @PathVariable("id") int id, @PathVariable("id2") int id2 ){
+        songService.findById(id);
+        listenerService.findById(id2);
+        listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById(id2)));
+        String redirectUrl = "redirect:/listeners/" + id2+"/songs";
+        return redirectUrl;
+    }
+    @DeleteMapping("/{id}")
+    public String delete5( @PathVariable("id") int id){
+        songService.findById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        listenerService.findById(listenerDetails.getListener().getId());
+        listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById((listenerDetails.getListener().getId()))));
+        String redirectUrl = "redirect:/songs/" + id;
+        return redirectUrl;
+    }
+
+
 //add song to listener
     //    @PostMapping("/addSongToListener/{id}/{id2}")
 

@@ -61,6 +61,8 @@ public class SongController {
 
         boolean songAdded = listenerSongService.hasSong(listenerDetails.getListener().getId(),albumService.findById(id).getId());
         model.addAttribute("songAdded", songAdded);
+
+
         return "song/index";
     }
 //При условии что альбом создан

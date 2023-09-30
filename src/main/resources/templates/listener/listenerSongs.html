@@ -45,12 +45,42 @@
       <ul>
         <th:block th:if="${not #lists.isEmpty(songs)}" th:each="song : ${songs}">
           <li style="display: flex; align-items: center;">
-            <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;" >
-            <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
-            <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
-            <form style="margin-left: auto; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}(id=${song.getId()},id2=${listener.getId()})}">
-              <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
-            </form>
+            <div class="col">
+              <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
+              <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
+              <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
+            </div>
+            <div class="col-auto" style="display: flex; align-items: center; background-color: transparent;">
+              <div class="dropdown" style="margin-right: 10px;">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 20px; line-height: 1;">
+                  +
+                </button>
+                <div class="dropdown-menu" style="text-align: center;">
+                  <th:block th:if="${playlists.isEmpty()}">
+                    <!-- Вывести сообщение, если плейлисты отсутствуют -->
+                    <div class="dropdown-item">
+                      <a href="/playlists/createPlaylist" style="color: #000000">Создать плейлист</a>
+                    </div>
+                  </th:block>
+                  <th:block th:unless="${playlists.isEmpty()}">
+                    <!-- Вывести элементы выпадающего списка, если есть плейлисты -->
+                    <form th:each="playlist : ${playlists}" th:method="POST" th:action="@{/playlistSongs/addSongToPlaylist3}" th:object="${playlistSong}">
+                      <th:block th:unless="${playlist.getPlaylistSongs().contains(song)}">
+                        <input type="hidden" name="songId" th:value="${song.getId()}" />
+                        <input type="hidden" name="playlistId" th:value="${playlist.getId()}" />
+                        <button type="submit" class="dropdown-item" th:text="'В плейлист: '+ ${playlist.getPlaylistName()}"></button>
+                      </th:block>
+                    </form>
+                  </th:block>
+                </div>
+              </div>
+                <form style="margin-left: 10px; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}/song(id=${song.getId()},id2=${listener.getId()})}">
+                  <button type="submit" class="btn btn-danger btn-sm heart-button" style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 24px; line-height: 1; padding: 0.375rem 0.75rem;">
+                    &hearts;
+                  </button>
+                </form>
+            </div>
           </li>
         </th:block>
         <th:block th:if="${#lists.isEmpty(songs)}">
@@ -64,10 +94,31 @@
   </div>
 </main>
 
-
 <script th:src="@{/js/script.js}"  src="../js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<script>
+  const heartButtons = document.querySelectorAll('.heart-button');
+
+  heartButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      if (button.style.color === 'green') {
+        button.style.color = 'red';
+      } else {
+        button.style.color = 'green';
+      }
+    });
+
+    button.addEventListener('mouseleave', () => {
+      if (button.style.color === 'green') {
+        button.style.color = 'red';
+      } else {
+        button.style.color = 'green';
+      }
+    });
+  });
+</script>
 </body>
 </html>
