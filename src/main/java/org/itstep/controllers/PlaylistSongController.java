@@ -56,4 +56,23 @@ public class PlaylistSongController {
         String redirectUrl = "redirect:/albums/" + albumId;
         return redirectUrl;
     }
+
+
+    @PostMapping("/addSongToPlaylist2")
+    public String addSongToListener2(//@PathVariable("id") int id, @PathVariable("id2") int id2,
+                                    @ModelAttribute("playlistSong") PlaylistSong playlistSong,
+                                    @RequestParam("songId") int songId,
+                                    @RequestParam("playlistId") int playlistId
+
+
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        //  model.addAttribute("listener",listenerDetails.getListener());
+        playlistSong.setSong(songService.findById(songId));
+        playlistSong.setPlaylist(playlistService.findById(playlistId));
+        playlistSongService.save(playlistSong);
+        String redirectUrl = "redirect:/playlists/" + playlistId;
+        return redirectUrl;
+    }
 }

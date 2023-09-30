@@ -58,59 +58,54 @@
                 <th:block th:each="song : ${songs}">
                     <li style="display: flex; align-items: center;">
                         <div class="col">
-                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
-                        <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
-                        <span class="simp-desc" th:text="${song.artist.toString()}" >Artist Name</span>
+                            <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
+                            <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
+                            <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
                         </div>
-                        <div class="col-auto"  style="background-color: transparent;" >
-                            <th:block th:if="${songAddedMap[song.getId()]}">
-                                    <form style="margin-left: auto; margin-right: 10px; " th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}/album(id=${song.getId()},id2=${listener.getId()})}">
-                                        <input type="hidden" name="albumId" th:value="${album.getId()}" />
-                                        <button type="submit" class="btn btn-danger btn-sm heart-button" style="background-color: transparent; border: none; color: red; font-weight: bold; font-size: 24px; line-height: 1;padding: 0.375rem 0.75rem">
-                                            &hearts;
-                                        </button>
-                                    </form>
-                            </th:block>
-
-                            <th:block th:unless="${songAddedMap[song.getId()]}">
-
-                                    <form style="margin-left: auto; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
-                                        <input type="hidden" name="songId" th:value="${song.getId()}" />
-                                        <input type="hidden" name="albumId" th:value="${album.getId()}" />
-                                        <button type="submit" class="btn btn-success heart-button" style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 24px; line-height: 1;">
-                                            &hearts;
-                                        </button>
-                                    </form>
-                            </th:block>
-                        </div>
-                        <div class="dropdown"  >
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 20px; line-height: 1;">
-                                +
-                            </button>
-                            <div class="dropdown-menu"  style="text-align: center;">
-
-                                <th:block th:if="${playlists.isEmpty()}">
-                                    <!-- Вывести сообщение, если плейлисты отсутствуют -->
-                                    <div class="dropdown-item">
-                                        <a href="/playlists/createPlaylist"  style="color:#000000">Создать плейлист</a>
-                                    </div>
-                                </th:block>
-                                <th:block th:unless="${playlists.isEmpty()}">
-                                    <!-- Вывести элементы выпадающего списка, если есть плейлисты -->
-                                    <form th:each="playlist : ${playlists}" th:method="POST" th:action="@{/playlistSongs/addSongToPlaylist}" th:object="${playlistSong}">
-                                        <th:block th:unless="${playlist.getPlaylistSongs().contains(song)}">
-                                            <input type="hidden" name="songId" th:value="${song.getId()}" />
-                                            <input type="hidden" name="playlistId" th:value="${playlist.getId()}" />
-                                            <input type="hidden" name="albumId" th:value="${album.getId()}" />
-                                            <button type="submit" class="dropdown-item"  th:text="'В плейлист: '+ ${playlist.getPlaylistName()}"></button>
-                                        </th:block>
-                                    </form>
-                                </th:block>
-
+                        <div class="col-auto" style="display: flex; align-items: center; background-color: transparent;">
+                            <div class="dropdown" style="margin-right: 10px;">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 20px; line-height: 1;">
+                                    +
+                                </button>
+                                <div class="dropdown-menu" style="text-align: center;">
+                                    <th:block th:if="${playlists.isEmpty()}">
+                                        <!-- Вывести сообщение, если плейлисты отсутствуют -->
+                                        <div class="dropdown-item">
+                                            <a href="/playlists/createPlaylist" style="color: #000000">Создать плейлист</a>
+                                        </div>
+                                    </th:block>
+                                    <th:block th:unless="${playlists.isEmpty()}">
+                                        <!-- Вывести элементы выпадающего списка, если есть плейлисты -->
+                                        <form th:each="playlist : ${playlists}" th:method="POST" th:action="@{/playlistSongs/addSongToPlaylist}" th:object="${playlistSong}">
+                                            <th:block th:unless="${playlist.getPlaylistSongs().contains(song)}">
+                                                <input type="hidden" name="songId" th:value="${song.getId()}" />
+                                                <input type="hidden" name="playlistId" th:value="${playlist.getId()}" />
+                                                <input type="hidden" name="albumId" th:value="${album.getId()}" />
+                                                <button type="submit" class="dropdown-item" th:text="'В плейлист: '+ ${playlist.getPlaylistName()}"></button>
+                                            </th:block>
+                                        </form>
+                                    </th:block>
+                                </div>
                             </div>
+                            <th:block th:if="${songAddedMap[song.getId()]}">
+                                <form style="margin-left: 10px; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}/{id2}/album(id=${song.getId()},id2=${listener.getId()})}">
+                                    <input type="hidden" name="albumId" th:value="${album.getId()}" />
+                                    <button type="submit" class="btn btn-danger btn-sm heart-button" style="background-color: transparent; border: none; color: green; font-weight: bold; font-size: 24px; line-height: 1; padding: 0.375rem 0.75rem;">
+                                        &hearts;
+                                    </button>
+                                </form>
+                            </th:block>
+                            <th:block th:unless="${songAddedMap[song.getId()]}">
+                                <form style="margin-left: 10px; margin-right: 10px;" th:method="POST" th:action="@{/listenerSongs/addSongToListener}" th:object="${listenerSong}">
+                                    <input type="hidden" name="songId" th:value="${song.getId()}" />
+                                    <input type="hidden" name="albumId" th:value="${album.getId()}" />
+                                    <button type="submit" class="btn btn-success heart-button" style="background-color: transparent; border: none; color: red; font-weight: bold; font-size: 24px; line-height: 1; padding: 0.375rem 0.75rem;">
+                                        &hearts;
+                                    </button>
+                                </form>
+                            </th:block>
                         </div>
-
                     </li>
                 </th:block>
 

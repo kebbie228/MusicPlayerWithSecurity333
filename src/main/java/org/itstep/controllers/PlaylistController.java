@@ -24,18 +24,21 @@ public class PlaylistController {
     private final PlaylistSongService playlistSongService;
     private final ListenerPlaylistService listenerPlaylistService;
     private final SongService songService;
+    private  final  ListenerService listenerService;
     private final  PlaylistService playlistService;
 
-    public PlaylistController(ListenerSongService listenerSongService, PlaylistSongService playlistSongService, ListenerPlaylistService listenerPlaylistService, SongService songService, PlaylistService playlistService) {
+    public PlaylistController(ListenerSongService listenerSongService, PlaylistSongService playlistSongService, ListenerPlaylistService listenerPlaylistService, SongService songService, ListenerService listenerService, PlaylistService playlistService) {
         this.listenerSongService = listenerSongService;
         this.playlistSongService = playlistSongService;
         this.listenerPlaylistService = listenerPlaylistService;
         this.songService = songService;
+        this.listenerService = listenerService;
         this.playlistService = playlistService;
     }
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model, @ModelAttribute("listenerSong") ListenerSong listenerSong,
-                        @ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist){
+                        @ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist,
+                        @ModelAttribute("playlistSong") PlaylistSong playlistSong){
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,8 +63,32 @@ public class PlaylistController {
 
         model.addAttribute("songAddedMap", songAddedMap); // Передаем информацию в модель
 
-       boolean playlistAdded = listenerPlaylistService.hasPlaylist(listenerId,playlistService.findById(id).getId());
-        model.addAttribute("playlistAdded", playlistAdded);
+
+
+//nachalo
+        List<Playlist> playlists = listenerService.findById(listenerDetails.getListener().getId()).getPlaylists();
+        Map<Integer, Boolean> songInPlaylistMap = new HashMap<>();
+
+        for (Song song : songs) {
+            int songId = song.getId();
+            boolean songInPlaylist = false;
+
+            for (Playlist playlist : playlists) {
+                if (playlist.getPlaylistSongs().contains(song)) {
+                    songInPlaylist = true;
+                    break;
+                }
+            }
+
+            songInPlaylistMap.put(songId, songInPlaylist);
+        }
+
+        model.addAttribute("songInPlaylistMap", songInPlaylistMap);
+        model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
+        System.out.println(songInPlaylistMap);
+//konec
+
+        //model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());
      //   System.out.println(playlistService.findById(id).getPlaylistSongs());
         return "playlist/index";
     }

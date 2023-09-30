@@ -44,6 +44,17 @@ public class ListenerSongController {
         String redirectUrl = "redirect:/albums/" + albumId;
         return redirectUrl;
     }
+
+    @DeleteMapping("/{id}/{id2}/playlist")
+    public String delete3( @PathVariable("id") int id, @PathVariable("id2") int id2,  @RequestParam("playlistId") int  playlistId ){
+        songService.findById(id);
+        listenerService.findById(id2);
+        listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById(id2)));
+
+        String redirectUrl = "redirect:/playlists/" + playlistId;
+        return redirectUrl;
+    }
+
 //add song to listener
     //    @PostMapping("/addSongToListener/{id}/{id2}")
 
