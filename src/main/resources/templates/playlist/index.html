@@ -61,10 +61,12 @@
             <ul>
                 <th:block th:each="song : ${songs}">
                     <li style="display: flex; align-items: center;">
+                        <div class="col">
                         <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
                         <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
                         <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
-
+                        </div>
+                        <div class="col-auto">
                         <!-- Проверяем, добавлена ли песня к слушателю, и отображаем соответствующую кнопку -->
                         <th:block th:if="${songAddedMap[song.getId()]}">
                             <button style="margin-left: auto; margin-right: 10px;" class="btn btn-success" disabled>Добавлена</button>
@@ -77,6 +79,11 @@
                                 <input type="submit" value="Добавить песню" class="btn btn-success" />
                             </form>
                         </th:block>
+                        </div>
+                        <form style="margin-left: auto; margin-right: 10px;" th:method="DELETE" th:action="@{/playlistSongs/{id}/{id2}(id=${song.getId()},id2=${playlist.getId()})}">
+                            <button type="submit" class="btn btn-danger btn-sm" style="background-color: transparent; border: none; color: red; font-weight: bold; font-size: 20px; line-height: 1;">×</button>
+                        </form>
+
                     </li>
                 </th:block>
             </ul>

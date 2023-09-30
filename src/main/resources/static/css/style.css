@@ -80,8 +80,3 @@ a,a:hover,a:visited{color:#ddd;text-decoration:none;}
     cursor: pointer; /* Показать курсор при наведении */
     border-radius: 4px; /* Закруглить углы */
 }
-
-/* Стили для кнопки при наведении */
-.input-button:hover {
-    background-color: #45a049; /* Цвет фона при наведении */
-}

@@ -74,24 +74,24 @@ private final SongService songService;
         boolean albumAdded = listenerAlbumService.hasAlbum(listenerId,albumService.findById(id).getId());
         model.addAttribute("albumAdded", albumAdded);
 //nachalo
-//        List<Playlist> playlists = listenerService.findById(listenerDetails.getListener().getId()).getPlaylists();
-//        Map<Integer, Boolean> songInPlaylistMap = new HashMap<>();
-//
-//        for (Song song : songs) {
-//            int songId = song.getId();
-//            boolean songInPlaylist = false;
-//
-//            for (Playlist playlist : playlists) {
-//                if (playlist.getPlaylistSongs().contains(song)) {
-//                    songInPlaylist = true;
-//                    break;
-//                }
-//            }
-//
-//            songInPlaylistMap.put(songId, songInPlaylist);
-//        }
-//
-//        model.addAttribute("songInPlaylistMap", songInPlaylistMap);
+        List<Playlist> playlists = listenerService.findById(listenerDetails.getListener().getId()).getPlaylists();
+        Map<Integer, Boolean> songInPlaylistMap = new HashMap<>();
+
+        for (Song song : songs) {
+            int songId = song.getId();
+            boolean songInPlaylist = false;
+
+            for (Playlist playlist : playlists) {
+                if (playlist.getPlaylistSongs().contains(song)) {
+                    songInPlaylist = true;
+                    break;
+                }
+            }
+
+            songInPlaylistMap.put(songId, songInPlaylist);
+        }
+
+        model.addAttribute("songInPlaylistMap", songInPlaylistMap);
 //konec
 
         model.addAttribute("playlists",listenerService.findById(listenerDetails.getListener().getId()).getPlaylists());

@@ -28,14 +28,14 @@ public class PlaylistSongController {
     }
 
 
-//    @DeleteMapping("/{id}/{id2}")
-//    public String delete(@PathVariable("id") int id, @PathVariable("id2") int id2){
-//        songService.findById(id);
-//        listenerService.findById(id2);
-//        listenerSongService.delete(listenerSongService.findByListenerAndSong(songService.findById(id),listenerService.findById(id2)));
-//        String redirectUrl = "redirect:/listeners/" + id2+"/songs";
-//        return redirectUrl;
-//    }
+    @DeleteMapping("/{id}/{id2}")
+    public String delete(@PathVariable("id") int id, @PathVariable("id2") int id2){
+        songService.findById(id);
+        playlistService.findById(id2);
+        playlistSongService.delete(playlistSongService.findByPlaylistAndSong(songService.findById(id), playlistService.findById(id2)));
+        String redirectUrl = "redirect:/playlists/" + id2;
+        return redirectUrl;
+    }
 
 
     @PostMapping("/addSongToPlaylist")
