@@ -43,20 +43,9 @@
     <div class="simple-audio-player" id="simp" data-config='{"shide_top":false,"shide_btm":false,"auto_load":false}' >
         <div class="simp-playlist">
             <ul style="text-align: center;">
-
                 <form th:method="DELETE" th:action="@{/listenerPlaylists/{id}/{id2}(id=${listener.getId()}, id2=${playlist.getId()})}">
                     <button type="submit" class="btn btn-danger delete-button">Удалить плейлист</button>
                 </form>
-
-<!--                <form th:method="POST" th:action="@{/listenerPlaylists/addPlaylistToListener}" th:object="${listenerPlaylist}">-->
-<!--                    <input type="hidden" name="albumId" th:value="${playlist.getId()}" />-->
-<!--                    <th:block th:if="${playlistAdded}">-->
-<!--                        <button class="btn btn-success" disabled>Плейлист добавлен</button>-->
-<!--                    </th:block>-->
-<!--                    <th:block th:unless="${playlistAdded}">-->
-<!--                        <input type="submit" value="Добавить альбом" class="btn btn-success" />-->
-<!--                    </th:block>-->
-<!--                </form>-->
             </ul>
             <ul>
                 <th:block th:each="song : ${songs}">
@@ -119,14 +108,11 @@
         <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
     </div>
 
-<!--                            <form style="margin-left: auto; margin-right: 10px;" th:method="DELETE" th:action="@{/playlistSongs/{id}/{id2}(id=${song.getId()},id2=${playlist.getId()})}">-->
-<!--                                <button type="submit" class="btn btn-danger btn-sm" style="background-color: transparent; border: none; color: red; font-weight: bold; font-size: 20px; line-height: 1;">×</button>-->
-<!--                            </form>-->
+
 </main>
 
 <!-- <a th:href="@{/albums/{id}/addSong(id=${album.getId()})}">Добавить песню</a> -->
 <br/>
-<script th:src="@{/js/script.js}"  src="../js/script.js"></script>
 
 <script th:src="@{/js/script.js}"  src="../js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
