@@ -41,21 +41,21 @@ public class SongService {
     public void delete(int id){
 
        Optional<Song> song= songRepository.findById(id);
-
-   Album album=song.get().getAlbum();
-  if( album.getAlbumSongs().size()>1){
-      //Удаление песни из альбома если в альбоме несколько песен
-      songRepository.deleteById(id);
-  }
-  else {
-      //Удаление песни и альбома если в альбоме одна песня
-      albumService.delete(album.getId());
-  }
+// исправить обязательно
+//  // Album album=song.get().getAlbum();
+//  if( album.getAlbumSongs().size()>1){
+//      //Удаление песни из альбома если в альбоме несколько песен
+//      songRepository.deleteById(id);
+//  }
+//  else {
+//      //Удаление песни и альбома если в альбоме одна песня
+//      albumService.delete(album.getId());
+    //}
 
     }
 
-    public List<Song> findByAlbum(Album album){
-      return songRepository.findByAlbum(album);
+    public List<Song> findByAlbums(Album album){
+      return songRepository.findByAlbums(album);
     }
 //    public List<Song> findByPlaylist(Playlist playlist){
 //      return songRepository.findByPlaylist(playlist);

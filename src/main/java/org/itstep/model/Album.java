@@ -21,8 +21,8 @@ public class Album {
     @Column(name = "photo_file_path")
     private String photoFilePath;
 
-    @OneToMany(mappedBy = "album",  cascade = CascadeType.ALL)
-    private List<Song> albumSongs;
+//    @OneToMany(mappedBy = "album",  cascade = CascadeType.ALL)
+//    private List<Song> albumSongs;
 
     @ManyToOne
     @JoinColumn(name = "artist_id", referencedColumnName = "artist_id")
@@ -31,6 +31,15 @@ public class Album {
 
     @ManyToMany(mappedBy = "albums",cascade = CascadeType.ALL)
     private List<Listener> listeners;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="album_song",
+            joinColumns = @JoinColumn(name="album_id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id")
+    )
+    private List<Song> albumSongs;
 
     public String getPhotoFilePath() {
         return photoFilePath;

@@ -35,7 +35,6 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
                 <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
-                <a class="dropdown-item" th:href="@{/listeners/{id}/artists(id=${listener.getId()})}">Liked Artists</a>
             </div>
         </li>
     </ul>
@@ -46,11 +45,13 @@
             <ul style="text-align: center;">
             </ul>
             <ul>
-
                     <li style="display: flex; align-items: center;">
+                        <div class="col">
                         <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
                         <span class="simp-source" th:attr="data-src='/'+${song.audioFilePath}">[[${song.songName}]]</span>
                         <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
+                        </div>
+                        <div class="col-auto" style="display: flex; align-items: center; background-color: transparent;">
                         <th:block th:if="${songAdded}">
                         <!-- Проверяем, добавлена ли песня к слушателю, и отображаем соответствующую кнопку -->
                         <form style="margin-left: 10px; margin-right: 10px;" th:method="DELETE" th:action="@{/listenerSongs/{id}(id=${song.getId()})}">
@@ -67,6 +68,7 @@
                                 </button>
                             </form>
                         </th:block>
+                        </div>
                     </li>
 
             </ul>

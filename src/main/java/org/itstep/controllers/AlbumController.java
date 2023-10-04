@@ -51,8 +51,9 @@ private final SongService songService;
     public String index(@PathVariable("id") int id, Model model,  @ModelAttribute("listenerSong") ListenerSong listenerSong,
                         @ModelAttribute("listenerAlbum") ListenerAlbum listenerAlbum,@ModelAttribute("playlistSong") PlaylistSong playlistSong){
         model.addAttribute("album",albumService.findById(id));
-        List<Song> songs = songService.findByAlbum(albumService.findById(id));
-        model.addAttribute("songs",songService.findByAlbum(albumService.findById(id)));
+
+      List<Song> songs = songService.findByAlbums(albumService.findById(id));
+     model.addAttribute("songs",songService.findByAlbums(albumService.findById(id)));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();

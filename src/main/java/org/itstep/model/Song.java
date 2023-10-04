@@ -27,9 +27,9 @@ public class Song {
     @JoinColumn(name = "artist_id", referencedColumnName = "artist_id")
     private Artist artist;
 
-    @ManyToOne()
-    @JoinColumn(name = "album_id", referencedColumnName = "album_id")
-    private Album album;
+//    @ManyToOne()
+//    @JoinColumn(name = "album_id", referencedColumnName = "album_id")
+//    private Album album;
 
 //    @ManyToOne()
 //    @JoinColumn(name = "playlist_id", referencedColumnName = "playlist_id")
@@ -47,6 +47,17 @@ public class Song {
 
     @ManyToMany(mappedBy = "playlistSongs",cascade = CascadeType.ALL)
     private List<Playlist> playlists;
+
+    @ManyToMany(mappedBy = "albumSongs",cascade = CascadeType.ALL)
+    private List<Album> albums;
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
 
     public List<Playlist> getPlaylists() {
         return playlists;
@@ -100,13 +111,13 @@ public class Song {
         this.artist = artist;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
-    }
+//    public Album getAlbum() {
+//        return album;
+//    }
+//
+//    public void setAlbum(Album album) {
+//        this.album = album;
+//    }
 
     public int getId() {
         return id;

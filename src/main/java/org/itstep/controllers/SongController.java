@@ -84,7 +84,8 @@ public class SongController {
         // return "album/addSong";
         //     Song song=new Song();
         Album album=albumService.findById(albumId);
-        song.setAlbum(album);
+        //ис
+      //  song.setAlbum(album);
         song.setArtist(artistService.findByAlbums(album));
         song.setSongYear(LocalDate.now().getYear());
         song.setPhotoFilePath(album.getPhotoFilePath());

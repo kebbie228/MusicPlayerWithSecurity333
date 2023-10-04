@@ -103,6 +103,12 @@
                         </div>
                     </li>
                 </th:block>
+
+                <th:block th:if="${#lists.isEmpty(songs)}">
+                    <li style="display: flex; justify-content: center; align-items: center; height: 50px;">
+                        В плейлисте нет песен
+                    </li>
+                </th:block>
             </ul>
         </div>
         <div class="simp-footer">Made with 💖 &amp; 🙌 by <a href="https://bit.ly/sekedus" target="_blank" title="Sekedus">Sekedus</a></div>
