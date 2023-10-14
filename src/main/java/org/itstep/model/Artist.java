@@ -21,6 +21,9 @@ public class Artist {
     @Column(name = "photo_file_path")
     private String photoFilePath;
 
+//    @OneToOne()
+//    @JoinColumn(name = "listener_id",referencedColumnName ="listener_id")
+//    private List
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   private  List<Song> songs;

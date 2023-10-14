@@ -56,13 +56,13 @@ public class MainController {
 public List<String> autocomplete(@RequestParam("query") String query) {
     List<String> results = new ArrayList<>();
 
-    // Здесь выполните поиск по вашим сущностям (альбомам, исполнителям, песням) и добавьте результаты в список results.
 
-    // Пример для альбомов:
     List<Album> albums = albumService.findByAlbumNameContainingIgnoreCase(query);
     for (Album album : albums) {
         results.add(album.getAlbumName());
-    }
+    }    // Здесь выполните поиск по вашим сущностям (альбомам, исполнителям, песням) и добавьте результаты в список results.
+
+    // Пример для альбомов:
 
     return results;
 }
