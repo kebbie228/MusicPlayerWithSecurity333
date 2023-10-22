@@ -39,8 +39,7 @@ public class SongService {
     }
 
     public void delete(int id){
-
-       Optional<Song> song= songRepository.findById(id);
+     songRepository.deleteById(id);
 // исправить обязательно
 //  // Album album=song.get().getAlbum();
 //  if( album.getAlbumSongs().size()>1){

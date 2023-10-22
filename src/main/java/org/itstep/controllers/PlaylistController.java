@@ -99,7 +99,7 @@ public class PlaylistController {
         return "listener/newPlaylist";
     }
 
-    @PostMapping("/createPlaylist")
+    @PatchMapping("/createPlaylist")
     public String createPlaylist(@ModelAttribute("playlist") Playlist playlist,
                                  @RequestParam("imageFile") MultipartFile imageFile,
                                  @ModelAttribute("listenerPlaylist") ListenerPlaylist listenerPlaylist) throws IOException

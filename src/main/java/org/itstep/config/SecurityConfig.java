@@ -28,7 +28,7 @@ private final ListenerDetailsService listenerDetailsService;
 
             //не пускаем на другие страницы
     // когда роли добавляешь то убрать эту строку  .anyRequest().authenticated() на
-        .anyRequest().hasAnyRole("USER","ADMIN")
+        .anyRequest().hasAnyRole("USER","ADMIN","ARTIST")
         .and()
         .formLogin().loginPage("/auth/login")
         .loginProcessingUrl("/process_login")

@@ -80,6 +80,9 @@
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
         <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+        <form th:action="@{/logout}" method="POST">
+          <input  class="dropdown-item" type="submit" value="Logout" />
+        </form>
       </div>
     </li>
   </ul>

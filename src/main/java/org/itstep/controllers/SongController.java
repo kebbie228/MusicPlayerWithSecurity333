@@ -2,6 +2,7 @@ package org.itstep.controllers;
 
 
 import org.itstep.model.Album;
+import org.itstep.model.Artist;
 import org.itstep.model.ListenerSong;
 import org.itstep.model.Song;
 import org.itstep.security.ListenerDetails;
@@ -51,7 +52,6 @@ public class SongController {
         return "song/player";
     }
 
-
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model, @ModelAttribute("listenerSong") ListenerSong listenerSong) {
         model.addAttribute("song", songService.findById(id));
@@ -59,9 +59,8 @@ public class SongController {
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
         model.addAttribute("listener",listenerDetails.getListener());
 
-        boolean songAdded = listenerSongService.hasSong(listenerDetails.getListener().getId(),albumService.findById(id).getId());
+        boolean songAdded = listenerSongService.hasSong(listenerDetails.getListener().getId(),songService.findById(id).getId());
         model.addAttribute("songAdded", songAdded);
-
 
         return "song/index";
     }
@@ -72,41 +71,50 @@ public class SongController {
 //        return "album/new";
 //    }
 
+
+
     @PostMapping("/add")
     public String addSong(
             @ModelAttribute("song") Song song,
             //  BindingResult bindingResult,
-            @RequestParam("albumId") int albumId,
+            @RequestParam("imageFile") MultipartFile imageFile,
             @RequestParam("audioFile") MultipartFile audioFile
     ) throws IOException
     {
         //   if (bindingResult.hasErrors())
         // return "album/addSong";
         //     Song song=new Song();
-        Album album=albumService.findById(albumId);
+       // Album album=albumService.findById(albumId);
         //ис
       //  song.setAlbum(album);
-        song.setArtist(artistService.findByAlbums(album));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        Artist artist= listenerDetails.getListener().getArtist();
+
+        song.setArtist(artist);
         song.setSongYear(LocalDate.now().getYear());
-        song.setPhotoFilePath(album.getPhotoFilePath());
+
         if (!audioFile.isEmpty()) {
             File dir = null; //Файловая система
             dir = new File("target/classes/static/");
             audioFile.transferTo(new File(dir.getAbsolutePath()+"/"+audioFile.getOriginalFilename()));
             song.setAudioFilePath(audioFile.getOriginalFilename());
         }
-//        if (!imageFile.isEmpty()) {
-//            File dir = null; //Файловая система
-//            //dir = new File("src/main/resources/static/album_photo");
-//            dir = new File("target/classes/static/photo");
-//            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
-//            song.setPhotoFilePath("/photo/"+imageFile.getOriginalFilename());
-//        }
+
+        if (!imageFile.isEmpty()) {
+            File dir = null; //Файловая система
+            //dir = new File("src/main/resources/static/album_photo");
+            dir = new File("target/classes/static/photo");
+            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
+            song.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
+        }
         //albumService.update(albumId,album);
         songService.save(song);
 
 
-        return "redirect:/albums";
+        String redirectUrl = "redirect:/artists/profile";
+        return redirectUrl;
     }
 
 

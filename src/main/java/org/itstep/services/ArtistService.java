@@ -3,6 +3,7 @@ package org.itstep.services;
 
 import org.itstep.model.Album;
 import org.itstep.model.Artist;
+import org.itstep.model.Listener;
 import org.itstep.repositories.AlbumRepository;
 import org.itstep.repositories.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,10 @@ public class ArtistService {
     public Artist findByAlbums(Album album){
       return artistRepository.findByAlbums(album);
     }
+    public Artist findByListener(Listener listener){
+      return artistRepository.findByListener(listener);
+    }
+
 
     public List<Artist> findByNickNameContainingIgnoreCase(String firstLetters){
         return  artistRepository.findByNickNameContainingIgnoreCase(firstLetters);

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -111,6 +114,92 @@ public class ArtistController {
         model.addAttribute("artist",artistService.findById(id));
         return "artist/edit";
     }
+
+    @GetMapping("/profile")
+    public String profile(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        Artist artist=artistService.findByListener(listenerDetails.getListener());
+        model.addAttribute("listener",listenerDetails.getListener());
+        model.addAttribute("artist",artist);
+        model.addAttribute("albums",albumService.findByArtist(artist));
+model.addAttribute("songs",artist.getSongs());
+
+        return "artist/profile";
+    }
+    @PatchMapping("/editPhotoProfile")
+    public String editPhotoProfile(@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        Artist artist= listenerDetails.getListener().getArtist();
+
+        if (!imageFile.isEmpty()) {
+            File dir = null; //Файловая система
+            //dir = new File("src/main/resources/static/album_photo");
+            dir = new File("target/classes/static/photo");
+            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
+            artist.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
+            System.out.println(artist.getId());
+            System.out.println(artist.getNickName());
+
+            artistService.update(artist.getId(),artist);
+        }
+
+     //   if (bindingResult.hasErrors()) return "artist/edit";
+
+        return "redirect:/artists/profile";
+    }
+
+    @GetMapping("/addSong")
+    public String newSong(Model model, @ModelAttribute("song") Song song){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
+        return "artist/addSong";
+    }
+    @GetMapping("/addAlbum")
+    public String newAlbum(Model model,  @ModelAttribute("album") Album album){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
+        return "artist/addAlbum";
+    }
+
+    @PostMapping("/createAlbum")
+    public String createAlbum(@ModelAttribute("album") Album album,
+                                 @RequestParam("imageFile") MultipartFile imageFile
+                                 ) throws IOException
+    {
+
+        if (!imageFile.isEmpty()) {
+            File dir = null; //Файловая система
+            //dir = new File("src/main/resources/static/album_photo");
+            dir = new File("target/classes/static/photo");
+            imageFile.transferTo(new File(dir.getAbsolutePath()+"/"+imageFile.getOriginalFilename()));
+            album.setPhotoFilePath("photo/"+imageFile.getOriginalFilename());
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+
+        album.setArtist(listenerDetails.getListener().getArtist());
+        albumService.save(album);
+
+        String redirectUrl = "redirect:/artists/profile";
+        return redirectUrl;
+    }
+
+    @DeleteMapping("/deleteSong")
+    public String delete4(  @RequestParam("songId") int  songId){
+        System.out.println(songId);
+
+        songService.delete(songId);
+
+        String redirectUrl = "redirect:/artists/profile";
+        return redirectUrl;
+    }
+
+
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("artist") @Valid Artist artist, BindingResult bindingResult,

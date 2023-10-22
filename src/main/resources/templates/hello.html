@@ -66,6 +66,11 @@
     <div class="ml-auto">
         <a class="nav-link" href="/search" style="color:#000000">Search</a>
     </div>
+    <th:block th:if="${listener.getArtist()!=null}">
+        <div class="ml-auto">
+            <a class="nav-link" th:href="@{/artists/profile}" style="color:#000000">Artist Profile</a>
+        </div>
+    </th:block>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#000000">
@@ -74,6 +79,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
                 <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+                <form th:action="@{/logout}" method="POST">
+                    <input  class="dropdown-item" type="submit" value="Logout" />
+                </form>
             </div>
         </li>
     </ul>

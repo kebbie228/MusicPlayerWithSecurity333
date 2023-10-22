@@ -25,4 +25,11 @@ public class RegistrationService {
         listener.setRole("ROLE_USER");
         listenerRepository.save(listener);
      }
+
+    @Transactional
+    public void register2(Listener listener) {
+        listener.setPassword(passwordEncoder.encode(listener.getPassword()));
+        listener.setRole("ROLE_ARTIST");
+        listenerRepository.save(listener);
+    }
 }

@@ -49,7 +49,6 @@ artists.add(artistService.findById(7));
 artists.add(artistService.findById(2));
 model.addAttribute("artistsHello", artists);
 
-
         return "hello";
     }
 

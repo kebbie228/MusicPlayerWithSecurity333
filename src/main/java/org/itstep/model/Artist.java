@@ -21,15 +21,23 @@ public class Artist {
     @Column(name = "photo_file_path")
     private String photoFilePath;
 
-//    @OneToOne()
-//    @JoinColumn(name = "listener_id",referencedColumnName ="listener_id")
-//    private List
+    @OneToOne()
+    @JoinColumn(name = "listener_id",referencedColumnName ="listener_id")
+    private Listener listener;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   private  List<Song> songs;
 
     @OneToMany(mappedBy = "artist",cascade = CascadeType.ALL)
     private  List<Album> albums;
+
+    public Listener getListener() {
+        return listener;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 
     public List<Album> getAlbums() {
         return albums;

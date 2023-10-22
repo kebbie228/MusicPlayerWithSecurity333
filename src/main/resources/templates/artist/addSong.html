@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello</title>
+  <!-- Подключаем стили Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="CodeHim">
+  <title>Audio Player with Playlist Example</title>
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">
+  <style>
+    /* Добавляем стили для красивого вывода альбомов */
+    .album-container {
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+      display: inline-block;
+      width: 250px; /* Фиксированная ширина контейнера */
+      background-color: #f5f5f5; /* Цвет фона контейнера */
+    }
+
+    /* Скрыть стандартные контролы аудиоплеера */
+    #audioPlayer {
+      display: none;
+    }
+
+    /* Стили для загрузки аудиофайла */
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Стили для кастомной кнопки загрузки аудиофайла */
+    label[for="audioFileInput"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 3px 3px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* При наведении добавьте небольшую анимацию */
+    label[for="audioFileInput"]:hover {
+      background-color: #0056b3;
+    }
+
+    .large-image-container {
+        width: 150px; /* Ширина контейнера для фотографии */
+        height: 150px; /* Высота контейнера для фотографии */
+        margin: 0 auto 10px auto; /* Отступ снизу контейнера */
+        text-align: center; /* Выравнивание содержимого по центру */
+        border: 2px solid #000; /* Граница для контейнера с фотографией */
+        border-radius: 10px; /* Скругление углов для контейнера с фотографией */
+        overflow: hidden; /* Скрытие лишней части изображения, если оно больше контейнера */
+    }
+
+    .album-image {
+        max-width: 100%; /* Максимальная ширина изображения (заполняет контейнер) */
+        max-height: 100%; /* Максимальная высота изображения (заполняет контейнер) */
+    }
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/photo/spoti.png" alt="Spoti Logo" width="35" height="35">
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/hello" style="color:#000000">Home</a>
+      </li>
+    </ul>
+  </div>
+  <div class="ml-auto">
+    <a class a="nav-link" href="/search" style="color:#000000">Search</a>
+  </div>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#000000">
+        Your Profile
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
+        <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+        <form th:action="@{/logout}" method="POST">
+          <input class="dropdown-item" type="submit" value="Logout" />
+        </form>
+      </div>
+    </li>
+  </ul>
+</nav>
+<div class="container mt-5">
+  <!-- Форма для создания аудиофайла -->
+  <form th:method="POST" th:action="@{/songs/add}" th:object="${song}" enctype="multipart/form-data" class="album-form">
+    <div class="row justify-content-center">
+      <div class="album-container">
+
+
+          <input type="file" name="imageFile" id="imageFileInput" style="display: none;" accept="image/*" />
+          <label for="imageFileInput">
+              <div class="large-image-container">
+                  <img src="#" alt="Вставьте фоторгафию обложки" class="album-image" style="cursor: pointer;" >
+              </div>
+          </label>
+
+          <!-- Поле для визуализации выбранного аудиофайла (например, имя файла) -->
+
+
+        <input type="file" name="audioFile" id="audioFileInput" accept=".mp3" />
+        <label for="audioFileInput">
+          <div class="audio-player">
+            <audio id="audioPlayer" controls >
+              <source src="#" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </label>
+        <input type="text" th:field="*{songName}" id="name" class="form-control" placeholder="Enter song name" style="margin-bottom: 10px;" />
+        <div style="color:red" th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}" class="error-message">songName Error</div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <input type="submit" value="Create!" class="btn btn-primary" />
+    </div>
+  </form>
+</div>
+
+<script th:src="@{/js/script.js}" src="../js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.plyr.io/3.6.4/plyr.js"></script>
+<script>
+  const audioPlayer = new Plyr('#audioPlayer', {
+    controls: ['play', 'progress', 'current-time', 'mute', 'volume'],
+  });
+
+  document.getElementById('audioFileInput').addEventListener('change', function () {
+    const fileInput = this;
+    const audioSrc = URL.createObjectURL(fileInput.files[0]);
+    audioPlayer.source = {
+      type: 'audio',
+      title: 'Song',
+      sources: [
+        {
+          src: audioSrc,
+          type: 'audio/mpeg',
+        },
+      ],
+    };
+    audioPlayer.play();
+  });
+</script>
+</body>
+</html>

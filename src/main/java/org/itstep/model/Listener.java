@@ -26,6 +26,9 @@ public class Listener {
     @Column(name = "password")
     private String password;
 
+    @OneToOne(mappedBy = "listener")
+    private Artist artist;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="listener_song",
@@ -52,6 +55,14 @@ public class Listener {
         private List<Playlist> playlists;
 
     public Listener() {
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     public List<Song> getSongs() {

@@ -25,12 +25,19 @@
       vertical-align: top; /* Выравнивание по верхнему краю */
     }
 
+    .large-image-container {
+      width: 150px; /* Ширина контейнера для фотографии */
+      height: 150px; /* Высота контейнера для фотографии */
+      margin: 0 auto 10px auto; /* Отступ снизу контейнера */
+      text-align: center; /* Выравнивание содержимого по центру */
+      border: 2px solid #000; /* Граница для контейнера с фотографией */
+      border-radius: 10px; /* Скругление углов для контейнера с фотографией */
+      overflow: hidden; /* Скрытие лишней части изображения, если оно больше контейнера */
+    }
+
     .album-image {
-      max-width: 150px;
-      max-height: 150px;
-      border: 2px solid #000;
-      border-radius: 10px;
-      margin: 0 auto;
+      max-width: 100%; /* Максимальная ширина изображения (заполняет контейнер) */
+      max-height: 100%; /* Максимальная высота изображения (заполняет контейнер) */
     }
 
     .album-title {
@@ -80,32 +87,29 @@
     </li>
   </ul>
 </nav>
-<div  class="container mt-5 text-center">
-  <h1>Ваши добавленные альбомы</h1>
-  <div th:if="${not #lists.isEmpty(albums)}" th:each="album:${albums}" class="album-container">
-    <img th:src="|/${album.getPhotoFilePath()}|" alt="Album Photo" class="album-image">
-    <a th:href="@{/albums/{id}(id=${album.getId()})}" class="album-title" th:text="${album.getAlbumName()}" style="color:#000000">album</a>
-    <!-- Добавляем кнопку "Удалить альбом" с JavaScript для отправки DELETE запроса -->
-    <form th:method="DELETE" th:action="@{/listenerAlbums/{id}/{id2}(id=${listener.getId()}, id2=${album.getId()})}">
-      <button type="submit" class="btn btn-danger delete-button">Удалить альбом</button>
-    </form>
-  </div>
-  <div th:if="${#lists.isEmpty(albums)}" class="alert alert-info" role="alert">
-    <strong>У вас нет добавленных альбомов</strong>
-  </div>
+<div class="container mt-5">
+  <!-- Форма для создания альбома -->
+  <form th:method="POST" th:action="@{/artists/createAlbum}" th:object="${album}" enctype="multipart/form-data" class="album-form">
+    <div class="row justify-content-center">
+      <div class="album-container">
+        <input type="file" name="imageFile" id="imageFileInput" style="display: none;" accept="image/*" />
+        <label for="imageFileInput">
+          <div class="large-image-container">
+            <img src="#" alt="Вставьте обложку альбома" class="album-image" style="cursor: pointer;">
+          </div>
+        </label>
+        <!-- Вместо ссылки добавляем поле ввода для текста -->
+        <input type="text" th:field="*{albumName}" id="name" class="form-control" placeholder="Enter album name" style="margin-bottom: 10px;" />
 
+        <!-- Остальные элементы формы -->
+        <div style="color:red" th:if="${#fields.hasErrors('albumName')}" th:errors="*{albumName}" class="error-message">albumName Error</div>
+      </div>
+    </div>
 
-  <h1>Ваши плейлесты</h1>
-  <h1>  <a href="/playlists/createPlaylist" class="btn btn-primary" style="margin-top: 20px;">Создать свой плейлист</a></h1>
-  <div th:each="playlist:${playlists}" class="album-container">
-    <img th:src="|/${playlist.getPhotoFilePath()}|" alt="Album Photo" class="album-image">
-    <a th:href="@{/playlists/{id}(id=${playlist.getId()})}" class="album-title" th:text="${playlist.getPlaylistName()}"  style="color:#000000">album</a>
-    <!-- Добавляем кнопку "Удалить альбом" с JavaScript для отправки DELETE запроса -->
-    <form th:method="DELETE" th:action="@{/listenerPlaylists/{id}/{id2}(id=${listener.getId()}, id2=${playlist.getId()})}">
-      <button type="submit" class="btn btn-danger delete-button">Удалить плейлист</button>
-    </form>
-  </div>
-
+    <div class="row justify-content-center">
+      <input type="submit" value="Create!" class="btn btn-primary" />
+    </div>
+  </form>
 </div>
 
 <script th:src="@{/js/script.js}"  src="../js/script.js"></script>

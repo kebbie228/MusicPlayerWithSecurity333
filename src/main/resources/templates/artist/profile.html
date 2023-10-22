@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <!-- Подключаем стили Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="CodeHim">
+    <title>Audio Player with Playlist Example </title>
+    <!-- Style CSS -->
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css">
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/photo/spoti.png" alt="Spoti Logo" width="35" height="35">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/hello" style="color:#000000">Home</a>
+            </li>
+        </ul>
+    </div>
+    <div class="ml-auto">
+        <a class="nav-link" href="/search" style="color:#000000">Search</a>
+    </div>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#000000">
+                Your Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{/listeners/{id}/songs(id=${listener.getId()})}">Liked Songs</a>
+                <a class="dropdown-item" th:href="@{/listeners/{id}/albums(id=${listener.getId()})}">Liked Albums</a>
+                <form th:action="@{/logout}" method="POST">
+                    <input  class="dropdown-item" type="submit" value="Logout" />
+                </form>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<div class="container mt-5 text-center">
+    <h1 style="color: #000;" th:text="${artist.getNickName()}">Artist Name</h1>
+    <div class="profile-photo" style="display: flex; flex-direction: column; align-items: center;">
+        <img th:src="|/${artist.photoFilePath}|" alt="Artist Photo" width="200" height="200" class="rounded-circle mt-3">
+        <form th:method="PATCH" th:action="@{/artists/editPhotoProfile}"  enctype="multipart/form-data" class="photo-upload-form">
+            <input type="file" name="imageFile" id="imageFileInput" accept="image/*" style="display: none;" />
+            <label for="imageFileInput" class="upload-label" style="display: flex; align-items: center;">
+                <i class="fa fa-camera" ></i> Поменять фотографию
+            </label>
+
+            <button type="submit" class="btn btn-primary mt-2">Сохранить фото</button>
+        </form>
+    </div>
+</div>
+
+<div style="display: flex;">
+    <table>
+        <tr style="border: 1px solid #dddddd; text-align: center; padding: 8px;">
+            <th>Ваши песни</th>
+        </tr>
+        <tr style="border: 1px solid #dddddd; text-align: center; padding: 8px;">
+            <td><a href="/artists/addSong" style="color: #000000">Добавать песню</a></td>
+        </tr>
+        <th:block th:each="song : ${songs}">
+            <tr style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+                <td style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
+                        <span class="simp-desc" th:text="${song.getSongName()}">Song Name</span>
+                        <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
+                    </div>
+                    <form style="margin-left: 10px;" th:method="DELETE" th:action="@{/artists/deleteSong}">
+                        <input type="hidden" name="songId" th:value="${song.getId()}" />
+                        <button type="submit" class="btn btn-danger btn-sm heart-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+
+
+<table>
+    <tr style="border: 1px solid #dddddd; text-align: center; padding: 8px;">
+        <th>Ваши альбомы</th>
+    </tr>
+    <tr style="border: 1px solid #dddddd; text-align: center; padding: 8px;">
+        <td><a href="/artists/addAlbum" style="color: #000000">Добавать альбом</a></td>
+    </tr>
+    <th:block th:each="album : ${albums}">
+        <tr style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+            <td>
+                <img th:src="|/${album.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
+                <span class="simp-desc" th:text="${album.getAlbumName()}">Artist Name</span>
+            </td>
+        </tr>
+    </th:block>
+</table>
+</div>
+
+
+<script th:src="@{/js/script.js}"  src="../js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

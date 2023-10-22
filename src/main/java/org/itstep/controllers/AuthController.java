@@ -1,17 +1,17 @@
 package org.itstep.controllers;
 
+import org.itstep.model.Artist;
 import org.itstep.model.Listener;
 
+import org.itstep.services.ArtistService;
+import org.itstep.services.ListenerService;
 import org.itstep.services.RegistrationService;
 //import org.itstep.util.ListenerValidator;
 import org.itstep.util.ListenerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,11 +20,13 @@ import javax.validation.Valid;
 public class AuthController {
    private final ListenerValidator listenerValidator;
     private final RegistrationService registrationService;
+    private final ArtistService artistService;
 @Autowired
     public AuthController(ListenerValidator listenerValidator,
-                          RegistrationService registrationService) {
+                          RegistrationService registrationService, ArtistService artistService) {
       this.listenerValidator = listenerValidator;
     this.registrationService = registrationService;
+    this.artistService = artistService;
 }
 
     @GetMapping("/login")
@@ -34,16 +36,27 @@ public class AuthController {
 
 @GetMapping("/registration")
 public String registrationPage(@ModelAttribute("listener") Listener listener ){
-
     return "auth/registration";
 }
     @PostMapping("/registration")
 public String performRegistration(
-            @ModelAttribute("listener") @Valid Listener listener,BindingResult bindingResult
+            @ModelAttribute("listener") @Valid Listener listener,BindingResult bindingResult,
+            @RequestParam(value = "registerAsArtist", required = false) boolean registerAsArtist
     ){
         listenerValidator.validate(listener,bindingResult);
- // if(bindingResult.hasErrors()) return "/auth/registration";
-    registrationService.register(listener);
+//if(bindingResult.hasErrors()) return "/auth/registration";
+
+        if (registerAsArtist) {
+            registrationService.register2(listener);
+            Artist newArtist= new Artist();
+            newArtist.setNickName(listener.getListenerName());
+            newArtist.setListener(listener);
+            newArtist.setPhotoFilePath("photo/no-avatar.jpg");
+            artistService.save(newArtist);
+        } else {
+            registrationService.register(listener);
+        }
+
       return "redirect:/auth/login";
     }
 
