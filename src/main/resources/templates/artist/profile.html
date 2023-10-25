@@ -82,7 +82,6 @@
                     <div style="display: flex; align-items: center;">
                         <img th:src="|/${song.getPhotoFilePath()}|" alt="Album Photo" width="38" height="38" style="margin-right: 10px;">
                         <span class="simp-desc" th:text="${song.getSongName()}">Song Name</span>
-                        <span class="simp-desc" th:text="${song.artist.toString()}">Artist Name</span>
                     </div>
                     <form style="margin-left: 10px;" th:method="DELETE" th:action="@{/artists/deleteSong}">
                         <input type="hidden" name="songId" th:value="${song.getId()}" />

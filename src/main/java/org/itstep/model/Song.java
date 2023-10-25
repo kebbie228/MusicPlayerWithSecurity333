@@ -48,7 +48,7 @@ public class Song {
     @ManyToMany(mappedBy = "playlistSongs",cascade = CascadeType.ALL)
     private List<Playlist> playlists;
 
-    @ManyToMany(mappedBy = "albumSongs",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "albumSongs",cascade = CascadeType.REFRESH)
     private List<Album> albums;
 
     public List<Album> getAlbums() {

@@ -25,14 +25,16 @@ public class ArtistController {
     private final SongService songService;
     private final ListenerAlbumService listenerAlbumService;
     private final ListenerSongService listenerSongService;
+    private final AlbumSongService albumSongService;
 
 @Autowired
-    public ArtistController(ArtistService artistService, AlbumService albumService, SongService songService, ListenerAlbumService listenerAlbumService, ListenerSongService listenerSongService) {
+    public ArtistController(ArtistService artistService, AlbumService albumService, SongService songService, ListenerAlbumService listenerAlbumService, ListenerSongService listenerSongService, AlbumSongService albumSongService) {
         this.artistService = artistService;
     this.albumService = albumService;
     this.songService = songService;
     this.listenerAlbumService = listenerAlbumService;
     this.listenerSongService = listenerSongService;
+    this.albumSongService = albumSongService;
 }
 
     @GetMapping()
@@ -150,12 +152,27 @@ model.addAttribute("songs",artist.getSongs());
         return "redirect:/artists/profile";
     }
 
+
+
     @GetMapping("/addSong")
     public String newSong(Model model, @ModelAttribute("song") Song song){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
         model.addAttribute("listener",listenerDetails.getListener());
         return "artist/addSong";
+    }
+
+
+    @GetMapping("/addAlbumSong/{id}")
+    public String newAlbumSong(Model model, @ModelAttribute("song") Song song,
+                               @PathVariable("id") int albumId
+    ){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        model.addAttribute("listener",listenerDetails.getListener());
+        model.addAttribute("album", albumService.findById(albumId));
+
+        return "artist/addAlbumSong";
     }
     @GetMapping("/addAlbum")
     public String newAlbum(Model model,  @ModelAttribute("album") Album album){
@@ -185,8 +202,25 @@ model.addAttribute("songs",artist.getSongs());
         album.setArtist(listenerDetails.getListener().getArtist());
         albumService.save(album);
 
-        String redirectUrl = "redirect:/artists/profile";
+        String redirectUrl = "redirect:/artists/profile/album/"+ album.getId();
         return redirectUrl;
+    }
+
+
+    @GetMapping("/profile/album/{id}")
+    public String profileAlbum( @PathVariable("id") int id, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+
+        Artist artist=artistService.findByListener(listenerDetails.getListener());
+        model.addAttribute("listener",listenerDetails.getListener());
+        model.addAttribute("artist",artist);
+
+        Album album = albumService.findById(id);
+        model.addAttribute("album",album);
+        model.addAttribute("songs",songService.findByAlbums(album));
+
+        return "artist/profileAlbum";
     }
 
     @DeleteMapping("/deleteSong")
@@ -196,6 +230,19 @@ model.addAttribute("songs",artist.getSongs());
         songService.delete(songId);
 
         String redirectUrl = "redirect:/artists/profile";
+        return redirectUrl;
+    }
+
+    @DeleteMapping("/deleteSong2")
+    public String deleteSong2(  @RequestParam("songId") int  songId,
+                                @RequestParam("albumId") int  albumId){
+        System.out.println(songId);
+     AlbumSong albumSong=   albumSongService.findByAlbumAndSong(songService.findById(songId),albumService.findById(albumId));
+        albumSongService.delete(albumSong);
+        songService.delete(songId);
+
+        String redirectUrl = "redirect:/artists/profile/album/"+ albumId;
+
         return redirectUrl;
     }
 

@@ -1,15 +1,9 @@
 package org.itstep.controllers;
 
 
-import org.itstep.model.Album;
-import org.itstep.model.Artist;
-import org.itstep.model.ListenerSong;
-import org.itstep.model.Song;
+import org.itstep.model.*;
 import org.itstep.security.ListenerDetails;
-import org.itstep.services.AlbumService;
-import org.itstep.services.ArtistService;
-import org.itstep.services.ListenerSongService;
-import org.itstep.services.SongService;
+import org.itstep.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/songs")
@@ -30,13 +22,15 @@ public class SongController {
     private final SongService songService;
     private final AlbumService albumService;
     private final ListenerSongService listenerSongService;
+    private final AlbumSongService albumSongService;
 
     private final ArtistService artistService;
     @Autowired
-    public SongController(SongService songService, AlbumService albumService, ListenerSongService listenerSongService, ArtistService artistService) {
+    public SongController(SongService songService, AlbumService albumService, ListenerSongService listenerSongService, AlbumSongService albumSongService, ArtistService artistService) {
         this.songService = songService;
         this.albumService = albumService;
         this.listenerSongService = listenerSongService;
+        this.albumSongService = albumSongService;
         this.artistService = artistService;
     }
 
@@ -124,4 +118,41 @@ public class SongController {
         return "redirect:/songs";
     }
 
+
+
+    @PostMapping("/add2")
+    public String addSong2(
+            @ModelAttribute("song") Song song,
+            @RequestParam("audioFile") MultipartFile audioFile,
+            @RequestParam("albumId") int albumId
+
+    ) throws IOException
+    {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ListenerDetails listenerDetails = (ListenerDetails) authentication.getPrincipal();
+        Artist artist= listenerDetails.getListener().getArtist();
+
+        song.setArtist(artist);
+        song.setSongYear(LocalDate.now().getYear());
+
+        if (!audioFile.isEmpty()) {
+            File dir = null; //Файловая система
+            dir = new File("target/classes/static/");
+            audioFile.transferTo(new File(dir.getAbsolutePath()+"/"+audioFile.getOriginalFilename()));
+            song.setAudioFilePath(audioFile.getOriginalFilename());
+        }
+    Album album = albumService.findById(albumId);
+     song.setPhotoFilePath(album.getPhotoFilePath());
+
+        //albumService.update(albumId,album);
+        songService.save(song);
+        AlbumSong albumSong= new AlbumSong();
+        albumSong.setAlbum(album);
+        albumSong.setSong(song);
+        albumSongService.save(albumSong);
+        String redirectUrl = "redirect:/artists/profile/album/"+ albumId;
+        return redirectUrl;
+    }
 }
